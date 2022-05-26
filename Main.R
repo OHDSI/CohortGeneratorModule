@@ -59,13 +59,6 @@ execute <- function(jobContext) {
     incrementalFolder = jobContext$moduleExecutionSettings$workSubFolder
   )
 
-  # Save the generation information
-  if (nrow(cohortsGenerated) > 0) {
-    cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$connectionDetailsReference
-    # Remove any cohorts that were skipped
-    cohortsGenerated <- cohortsGenerated[toupper(cohortsGenerated$generationStatus) != "SKIPPED", ]
-  }
-
   # Export the results
   rlang::inform("Export data")
   resultsFolder <- jobContext$moduleExecutionSettings$resultsSubFolder
@@ -73,11 +66,25 @@ execute <- function(jobContext) {
     dir.create(resultsFolder, recursive = TRUE)
   }
 
-  CohortGenerator::saveIncremental(
-    data = cohortsGenerated,
-    fileName = file.path(resultsFolder, "cohort_generation.csv"),
-    cohortId = cohortsGenerated$cohortId
-  )
+  # Save the generation information
+  if (nrow(cohortsGenerated) > 0) {
+    cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$connectionDetailsReference
+    # Remove any cohorts that were skipped
+    cohortsGenerated <- cohortsGenerated[toupper(cohortsGenerated$generationStatus) != "SKIPPED", ]
+    cohortsGeneratedFileName = file.path(resultsFolder, "cohort_generation.csv")
+    if (jobContext$settings$incremental) {
+      # Format the data for saving
+      names(cohortsGenerated) <- SqlRender::camelCaseToSnakeCase(names(cohortsGenerated))
+      CohortGenerator::saveIncremental(
+        data = cohortsGenerated,
+        fileName = cohortsGeneratedFileName,
+        cohort_id = cohortsGenerated$cohort_id
+      )
+    } else {
+      CohortGenerator::writeCsv(x = cohortsGenerated,
+                                fileName = cohortsGeneratedFileName)
+    }
+  }
 
   cohortCounts <- CohortGenerator::getCohortCounts(
     connection = connection,

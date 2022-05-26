@@ -25,3 +25,13 @@ execute(jobContext)
 
 ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE)
 ParallelLogger::unregisterLogger("DEFAULT_ERRORREPORT_LOGGER", silent = TRUE)
+
+# Verify that all output file are in the expected format
+rlang::inform(paste0("Verify contents of ", jobContext$moduleExecutionSettings$resultsSubFolder, ". Review for any warnings"))
+resultFiles <- list.files(jobContext$moduleExecutionSettings$resultsSubFolder, 
+                          pattern = ".csv",
+                          full.names = TRUE)
+for (i in 1:length(resultFiles)) {
+  rlang::inform(basename(resultFiles[i]))
+  data <- CohortGenerator::readCsv(file = resultFiles[i])
+}

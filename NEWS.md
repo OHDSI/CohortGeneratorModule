@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.3
+=======================
+
+Fixing bug with cohort_generation.csv which was not written in snake_case
+format.
+
 CohortGeneratorModule 0.0.2
 =======================
 
