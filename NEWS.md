@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.4
+=======================
+
+Fixing bug with to use jobContext$moduleExecutionSettings$databaseId for the
+databaseId in the results. This value will be set by Strategus.
+
 CohortGeneratorModule 0.0.3
 =======================
 
