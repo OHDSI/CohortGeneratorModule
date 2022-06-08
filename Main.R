@@ -68,7 +68,7 @@ execute <- function(jobContext) {
 
   # Save the generation information
   if (nrow(cohortsGenerated) > 0) {
-    cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$connectionDetailsReference
+    cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$databaseId
     # Remove any cohorts that were skipped
     cohortsGenerated <- cohortsGenerated[toupper(cohortsGenerated$generationStatus) != "SKIPPED", ]
     cohortsGeneratedFileName = file.path(resultsFolder, "cohort_generation.csv")
@@ -90,7 +90,7 @@ execute <- function(jobContext) {
     connection = connection,
     cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
     cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
-    databaseId = jobContext$moduleExecutionSettings$connectionDetailsReference
+    databaseId = jobContext$moduleExecutionSettings$databaseId
   )
 
   CohortGenerator::writeCsv(
@@ -106,7 +106,7 @@ execute <- function(jobContext) {
     snakeCaseToCamelCase = FALSE,
     fileNamesInSnakeCase = TRUE,
     incremental = jobContext$settings$incremental,
-    databaseId = jobContext$moduleExecutionSettings$connectionDetailsReference
+    databaseId = jobContext$moduleExecutionSettings$databaseId
   )
 
   # Set the table names in resultsDataModelSpecification.csv
