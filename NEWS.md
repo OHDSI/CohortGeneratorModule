@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.5
+=======================
+
+Fixing bug with renv.lock file which had an incorrect reference to the 
+CohortGenerator package.
+
 CohortGeneratorModule 0.0.4
 =======================
 
