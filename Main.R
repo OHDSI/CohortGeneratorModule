@@ -82,7 +82,7 @@ execute <- function(jobContext) {
       )
     } else {
       CohortGenerator::writeCsv(x = cohortsGenerated,
-                                fileName = cohortsGeneratedFileName)
+                                file = cohortsGeneratedFileName)
     }
   }
 
@@ -108,15 +108,24 @@ execute <- function(jobContext) {
     incremental = jobContext$settings$incremental,
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
+  
+  # Massage and save the cohort definition set
+  cohortDefinitions <- cohortDefinitionSet
+  names(cohortDefinitions) <- c("cohortDefinitionId", "cohortName", "json", "sqlCommand")
+  cohortDefinitions$description <- ""
+  CohortGenerator::writeCsv(x = cohortDefinitions,
+                            file = file.path(resultsFolder, "cohort_definition.csv"))
 
   # Set the table names in resultsDataModelSpecification.csv
   moduleInfo <- getModuleInfo()
   resultsDataModel <- CohortGenerator::readCsv(file = "resultsDataModelSpecification.csv",
                                                warnOnCaseMismatch = FALSE)
   newTableNames <- paste0(moduleInfo$TablePrefix, resultsDataModel$tableName)
+  file.rename(file.path(resultsFolder, paste0(unique(resultsDataModel$tableName), ".csv")),
+              file.path(resultsFolder, paste0(unique(newTableNames), ".csv")))  
   resultsDataModel$tableName <- newTableNames
   CohortGenerator::writeCsv(x = resultsDataModel,
-                            file.path(resultsFolder, "resultsDataModelSpecification.csv"),
+                            file = file.path(resultsFolder, "resultsDataModelSpecification.csv"),
                             warnOnCaseMismatch = FALSE,
                             warnOnUploadRuleViolations = FALSE)
 

@@ -5,11 +5,8 @@ createCohortGeneratorModuleSpecifications <- function(incremental = TRUE,
     analysis[[name]] <- get(name)
   }
 
-  checkmate::assert_file_exists("MetaData.json")
-  moduleInfo <- ParallelLogger::loadSettingsFromJson("MetaData.json")
-  
-  specifications <- list(module = moduleInfo$Name,
-                         version = moduleInfo$Version,
+  specifications <- list(module = "CohortGeneratorModule",
+                         version = "0.0.6",
                          remoteRepo = "github.com",
                          remoteUsername = "ohdsi",
                          settings = analysis)
