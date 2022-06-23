@@ -29,6 +29,7 @@ rCode <- ParallelLogger::createArgFunction(
   excludeArgs = c("val"),
   addArgs = list("incremental" = TRUE, 
                  "generateStats" = TRUE),
+  newName = "createCohortGeneratorModuleSpecifications",
   rCode = rCode
 )
 rCode <- rCode[-grep("^#'", rCode)]

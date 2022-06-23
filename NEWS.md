@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.8
+=======================
+
+Fix auto-generated SettingsFunction.R to use proper function name
+`createCohortGeneratorModuleSpecifications`
+
 CohortGeneratorModule 0.0.7
 =======================
 
