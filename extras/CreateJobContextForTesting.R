@@ -17,12 +17,14 @@ getSampleCohortDefintionSet <- function() {
     cohortJsonFileName <- cohortJsonFiles[i]
     cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
     cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
-    sampleCohorts <- rbind(sampleCohorts, data.frame(cohortId = i,
-                                                     cohortName = cohortName,
-                                                     cohortDefinition = cohortJson,
-                                                     stringsAsFactors = FALSE))
+    sampleCohorts <- rbind(sampleCohorts, data.frame(
+      cohortId = i,
+      cohortName = cohortName,
+      cohortDefinition = cohortJson,
+      stringsAsFactors = FALSE
+    ))
   }
-  sampleCohorts <- apply(sampleCohorts,1,as.list)
+  sampleCohorts <- apply(sampleCohorts, 1, as.list)
   return(sampleCohorts)
 }
 
@@ -33,7 +35,7 @@ createCohortSharedResource <- function(cohortDefinitionSet) {
 }
 
 # Create CohortGeneratorModule settings ---------------------------------------
-cohortGeneratorModuleSpecifications <-  createCohortGeneratorModuleSpecifications(
+cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications(
   incremental = FALSE,
   generateStats = TRUE
 )
@@ -43,13 +45,15 @@ analysisSpecifications <- createEmptyAnalysisSpecificiations() %>%
   addSharedResources(createCohortSharedResource(getSampleCohortDefintionSet())) %>%
   addModuleSpecifications(cohortGeneratorModuleSpecifications)
 
-executionSettings <- Strategus::createExecutionSettings(connectionDetailsReference = "dummy",
-                                                        workDatabaseSchema = "main",
-                                                        cdmDatabaseSchema = "main",
-                                                        cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = "cohort"),
-                                                        workFolder = "dummy",
-                                                        resultsFolder = "dummy",
-                                                        minCellCount = 5)
+executionSettings <- Strategus::createExecutionSettings(
+  connectionDetailsReference = "dummy",
+  workDatabaseSchema = "main",
+  cdmDatabaseSchema = "main",
+  cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = "cohort"),
+  workFolder = "dummy",
+  resultsFolder = "dummy",
+  minCellCount = 5
+)
 
 # Job Context ----------------------------
 module <- "CohortGeneratorModule"
@@ -58,8 +62,9 @@ moduleExecutionSettings <- executionSettings
 moduleExecutionSettings$workSubFolder <- "dummy"
 moduleExecutionSettings$resultsSubFolder <- "dummy"
 moduleExecutionSettings$databaseId <- 123
-jobContext <- list(sharedResources = analysisSpecifications$sharedResources,
-                   settings = analysisSpecifications$moduleSpecifications[[moduleIndex]]$settings,
-                   moduleExecutionSettings = moduleExecutionSettings)
+jobContext <- list(
+  sharedResources = analysisSpecifications$sharedResources,
+  settings = analysisSpecifications$moduleSpecifications[[moduleIndex]]$settings,
+  moduleExecutionSettings = moduleExecutionSettings
+)
 saveRDS(jobContext, "tests/testJobContext.rds")
-

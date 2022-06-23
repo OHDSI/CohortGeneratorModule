@@ -20,7 +20,7 @@ dir.create(jobContext$moduleExecutionSettings$resultsSubFolder, recursive = TRUE
 ParallelLogger::addDefaultFileLogger(file.path(jobContext$moduleExecutionSettings$resultsSubFolder, "log.txt"))
 ParallelLogger::addDefaultErrorReportLogger(file.path(jobContext$moduleExecutionSettings$resultsSubFolder, "errorReport.R"))
 
-#debugonce(execute)
+# debugonce(execute)
 execute(jobContext)
 
 ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE)
@@ -28,9 +28,10 @@ ParallelLogger::unregisterLogger("DEFAULT_ERRORREPORT_LOGGER", silent = TRUE)
 
 # Verify that all output file are in the expected format
 rlang::inform(paste0("Verify contents of ", jobContext$moduleExecutionSettings$resultsSubFolder, ". Review for any warnings"))
-resultFiles <- list.files(jobContext$moduleExecutionSettings$resultsSubFolder, 
-                          pattern = ".csv",
-                          full.names = TRUE)
+resultFiles <- list.files(jobContext$moduleExecutionSettings$resultsSubFolder,
+  pattern = ".csv",
+  full.names = TRUE
+)
 for (i in 1:length(resultFiles)) {
   rlang::inform(basename(resultFiles[i]))
   data <- CohortGenerator::readCsv(file = resultFiles[i])
