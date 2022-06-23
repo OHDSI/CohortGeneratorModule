@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.6
+=======================
+
+Adding cohort_definition information to the output and adding unit tests
+to ensure all renv dependencies are available across platforms.
+
 CohortGeneratorModule 0.0.5
 =======================
 

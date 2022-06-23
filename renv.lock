@@ -145,9 +145,8 @@
     },
     "dplyr": {
       "Package": "dplyr",
-      "Version": "1.0.8",
+      "Version": "1.0.9",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "ellipsis": {
