@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.0.7
+=======================
+
+Using an experimental version of DatabaseConnector
+
 CohortGeneratorModule 0.0.6
 =======================
 
