@@ -47,7 +47,7 @@ execute <- function(jobContext) {
     cohortTableNames = jobContext$moduleExecutionSettings$cohortTableNames,
     incremental = jobContext$settings$incremental
   )
-  
+
   # Generate the cohorts
   cohortsGenerated <- CohortGenerator::generateCohortSet(
     connection = connection,
@@ -71,7 +71,7 @@ execute <- function(jobContext) {
     cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$databaseId
     # Remove any cohorts that were skipped
     cohortsGenerated <- cohortsGenerated[toupper(cohortsGenerated$generationStatus) != "SKIPPED", ]
-    cohortsGeneratedFileName = file.path(resultsFolder, "cohort_generation.csv")
+    cohortsGeneratedFileName <- file.path(resultsFolder, "cohort_generation.csv")
     if (jobContext$settings$incremental) {
       # Format the data for saving
       names(cohortsGenerated) <- SqlRender::camelCaseToSnakeCase(names(cohortsGenerated))
@@ -81,8 +81,10 @@ execute <- function(jobContext) {
         cohort_id = cohortsGenerated$cohort_id
       )
     } else {
-      CohortGenerator::writeCsv(x = cohortsGenerated,
-                                fileName = cohortsGeneratedFileName)
+      CohortGenerator::writeCsv(
+        x = cohortsGenerated,
+        file = cohortsGeneratedFileName
+      )
     }
   }
 
@@ -109,16 +111,33 @@ execute <- function(jobContext) {
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
 
+  # Massage and save the cohort definition set
+  cohortDefinitions <- cohortDefinitionSet
+  names(cohortDefinitions) <- c("cohortDefinitionId", "cohortName", "json", "sqlCommand")
+  cohortDefinitions$description <- ""
+  CohortGenerator::writeCsv(
+    x = cohortDefinitions,
+    file = file.path(resultsFolder, "cohort_definition.csv")
+  )
+
   # Set the table names in resultsDataModelSpecification.csv
   moduleInfo <- getModuleInfo()
-  resultsDataModel <- CohortGenerator::readCsv(file = "resultsDataModelSpecification.csv",
-                                               warnOnCaseMismatch = FALSE)
+  resultsDataModel <- CohortGenerator::readCsv(
+    file = "resultsDataModelSpecification.csv",
+    warnOnCaseMismatch = FALSE
+  )
   newTableNames <- paste0(moduleInfo$TablePrefix, resultsDataModel$tableName)
+  file.rename(
+    file.path(resultsFolder, paste0(unique(resultsDataModel$tableName), ".csv")),
+    file.path(resultsFolder, paste0(unique(newTableNames), ".csv"))
+  )
   resultsDataModel$tableName <- newTableNames
-  CohortGenerator::writeCsv(x = resultsDataModel,
-                            file.path(resultsFolder, "resultsDataModelSpecification.csv"),
-                            warnOnCaseMismatch = FALSE,
-                            warnOnUploadRuleViolations = FALSE)
+  CohortGenerator::writeCsv(
+    x = resultsDataModel,
+    file = file.path(resultsFolder, "resultsDataModelSpecification.csv"),
+    warnOnCaseMismatch = FALSE,
+    warnOnUploadRuleViolations = FALSE
+  )
 
   # Zip the results
   zipFile <- file.path(resultsFolder, "cohortGeneratorResults.zip")

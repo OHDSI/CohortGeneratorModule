@@ -1,4 +1,9 @@
 table_name,column_name,data_type,is_required,primary_key,empty_is_na
+cohort_definition,cohort_definition_id,bigint,Yes,Yes,No
+cohort_definition,cohort_name,varchar,Yes,No,No
+cohort_definition,description,varchar,No,No,No
+cohort_definition,json,text,No,No,No
+cohort_definition,sql_command,text,No,No,No
 cohort_generation,cohort_id,bigint,Yes,Yes,No
 cohort_generation,cohort_name,varchar,Yes,No,No
 cohort_generation,generation_status,varchar,No,No,No
