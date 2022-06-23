@@ -8,7 +8,7 @@ createComputeChecksumArgs <- function(incremental = TRUE,
   }
 
   specifications <- list(module = "CohortGeneratorModule",
-                         version = "0.0.6",
+                         version = "0.0.7",
                          remoteRepo = "github.com",
                          remoteUsername = "ohdsi",
                          settings = analysis)
