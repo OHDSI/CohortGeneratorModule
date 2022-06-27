@@ -1,6 +1,6 @@
 {
 	"R" : {
-		"Version" : "4.1.3",
+		"Version" : "4.2.0",
 		"Repositories" : [
 			{
 				"Name" : "CRAN",
@@ -263,7 +263,7 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "DatabaseConnector",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "develop"
+			"RemoteRef" : "0dda67da91535c0f68c6a164fa1e15adb7d24f1a"
 		},
 		"digest" : {
 			"Package" : "digest",
@@ -415,21 +415,21 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"Eunomia" : {
-			"Package" : "Eunomia",
-			"Version" : "1.0.2",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "Eunomia",
-			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v1.0.2"
-		},
 		"renv" : {
 			"Package" : "renv",
 			"Version" : "0.15.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
+		},
+		"CohortGenerator" : {
+			"Package" : "CohortGenerator",
+			"Version" : "0.5.0",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "CohortGenerator",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v0.5.0"
 		},
 		"CirceR" : {
 			"Package" : "CirceR",
@@ -441,15 +441,15 @@
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "v1.1.1"
 		},
-		"CohortGenerator" : {
-			"Package" : "CohortGenerator",
-			"Version" : "0.5.0",
+		"Eunomia" : {
+			"Package" : "Eunomia",
+			"Version" : "1.0.2",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "CohortGenerator",
+			"RemoteRepo" : "Eunomia",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v0.5.0"
+			"RemoteRef" : "v1.0.2"
 		}
 	}
 }
