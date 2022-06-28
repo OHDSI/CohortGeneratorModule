@@ -1,3 +1,10 @@
+CohortGeneratorModule 0.0.9
+=======================
+
+- Use DatabaseConnector v5.0.4
+- Update resultsDataModelSpecification.csv to use database_id as bigint and to 
+use new format for OhdsiSharing
+
 CohortGeneratorModule 0.0.8
 =======================
 
