@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.10
+=======================
+
+- Update resultsDataModelSpecification.csv to use database_id as varchar
+- Bug fix: json and sqlCommand were swapped
+
 CohortGeneratorModule 0.0.9
 =======================
 

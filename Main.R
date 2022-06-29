@@ -113,7 +113,7 @@ execute <- function(jobContext) {
 
   # Massage and save the cohort definition set
   cohortDefinitions <- cohortDefinitionSet
-  names(cohortDefinitions) <- c("cohortDefinitionId", "cohortName", "json", "sqlCommand")
+  names(cohortDefinitions) <- c("cohortDefinitionId", "cohortName", "sqlCommand", "json")
   cohortDefinitions$description <- ""
   CohortGenerator::writeCsv(
     x = cohortDefinitions,
