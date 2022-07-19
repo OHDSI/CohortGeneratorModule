@@ -1,3 +1,9 @@
+CohortGeneratorModule 0.0.11
+=======================
+
+- Update code to ensure inclusion rule names are included.
+- Upgrade to use CohortGenerator v0.6.0
+
 CohortGeneratorModule 0.0.10
 =======================
 

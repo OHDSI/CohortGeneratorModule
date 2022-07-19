@@ -99,6 +99,12 @@ execute <- function(jobContext) {
     x = cohortCounts,
     file = file.path(resultsFolder, "cohort_count.csv")
   )
+  
+  # Insert the inclusion rule names before exporting the stats tables
+  CohortGenerator::insertInclusionRuleNames(connection = connection,
+                                            cohortDefinitionSet = cohortDefinitionSet,
+                                            cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
+                                            cohortInclusionTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortInclusionTable)
 
   CohortGenerator::exportCohortStatsTables(
     connection = connection,
@@ -136,6 +142,7 @@ execute <- function(jobContext) {
     x = resultsDataModel,
     file = file.path(resultsFolder, "resultsDataModelSpecification.csv"),
     warnOnCaseMismatch = FALSE,
+    warnOnFileNameCaseMismatch = FALSE,
     warnOnUploadRuleViolations = FALSE
   )
 
