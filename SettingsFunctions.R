@@ -95,22 +95,3 @@ createNegativeControlOutcomeCohortSharedResourceSpecifications <- function(negat
   class(sharedResource) <- c("NegativeControlOutcomeSharedResources", "SharedResources")
   return(sharedResource)
 }
-
-#' Create a parameter object for the function computeChecksum
-#'
-#' @details
-#' Create an object defining the parameter values.
-#'
-#' @param incremental 
-#' @param generateStats 
-#'
-#' @export
-createCohortGeneratorModuleSpecifications <- function(incremental = TRUE,
-                                                      generateStats = TRUE) {
-  analysis <- list()
-  for (name in names(formals(createCohortGeneratorModuleSpecifications))) {
-    analysis[[name]] <- get(name)
-  }
-  class(analysis) <- "args"
-  return(analysis)
-}
