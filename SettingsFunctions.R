@@ -86,6 +86,7 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
 createNegativeControlOutcomeCohortSharedResourceSpecifications <- function(negativeControlOutcomeCohortSet,
                                                                            occurrenceType,
                                                                            detectOnDescendants) {
+  negativeControlOutcomeCohortSet <- apply(negativeControlOutcomeCohortSet, 1, as.list)
   sharedResource <- list(
     negativeControlOutcomes = list(
       negativeControlOutcomeCohortSet = negativeControlOutcomeCohortSet,
