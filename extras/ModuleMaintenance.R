@@ -30,11 +30,13 @@ rCode <- gsub("%version%", moduleInfo$Version, rCode)
 writeLines(rCode, "SettingsFunctions.R")
 
 # Generate renv lock file and activate renv:
+renv::deactivate()
 OhdsiRTools::createRenvLockFile(
   rootPackage = "CohortGenerator",
   includeRootPackage = TRUE,
   mode = "description",
   additionalRequiredPackages = c(
+    "DatabaseConnector",
     "checkmate",
     "CirceR",
     "testthat",
