@@ -18,20 +18,29 @@ getSampleCohortDefintionSet <- function() {
     cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
     cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
     sampleCohorts <- rbind(sampleCohorts, data.frame(
-      cohortId = i,
+      cohortId = bit64::as.integer64(i),
       cohortName = cohortName,
-      cohortDefinition = cohortJson,
+      json = cohortJson,
+      sql = "",
       stringsAsFactors = FALSE
     ))
   }
-  sampleCohorts <- apply(sampleCohorts, 1, as.list)
   return(sampleCohorts)
 }
 
-createCohortSharedResource <- function(cohortDefinitionSet) {
-  sharedResource <- list(cohortDefinitions = cohortDefinitionSet)
-  class(sharedResource) <- c("CohortDefinitionSharedResources", "SharedResources")
+createCohortSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
+  sharedResource <- createCohortSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
   return(sharedResource)
+}
+
+createNegativeControlSharedResource <- function() {
+  negativeControlOutcomes <- readCsv(file = system.file("testdata/negativecontrols/negativecontrolOutcomes.csv",
+                                                        package = "CohortGenerator",
+                                                        mustWork = TRUE))
+  negativeControlOutcomes$cohortId <- negativeControlOutcomes$outcomeConceptId
+  createNegativeControlOutcomeCohortSharedResourceSpecifications(negativeControlOutcomeCohortSet = negativeControlOutcomes,
+                                                                 occurrenceType = "all",
+                                                                 detectOnDescendants = FALSE)
 }
 
 # Create CohortGeneratorModule settings ---------------------------------------
@@ -42,10 +51,12 @@ cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications
 
 # Module Settings Spec ----------------------------
 analysisSpecifications <- createEmptyAnalysisSpecificiations() %>%
-  addSharedResources(createCohortSharedResource(getSampleCohortDefintionSet())) %>%
+  addSharedResources(createCohortSharedResource()) %>%
+  addSharedResources(createNegativeControlSharedResource()) %>%
   addModuleSpecifications(cohortGeneratorModuleSpecifications)
 
-executionSettings <- Strategus::createExecutionSettings(
+#executionSettings <- Strategus::createExecutionSettings(
+executionSettings <-   Strategus::createCdmExecutionSettings(
   connectionDetailsReference = "dummy",
   workDatabaseSchema = "main",
   cdmDatabaseSchema = "main",
