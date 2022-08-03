@@ -37,4 +37,7 @@ cohort_count,database_id,varchar,Yes,Yes,No,No,"The database idenifier for this 
 cohort_count,cohort_id,bigint,Yes,Yes,No,No,"The unique identifier for the cohort definition"
 cohort_count,cohort_entries,bigint,Yes,Yes,No,Yes,"The number of cohort entries"
 cohort_count,cohort_subjects,bigint,Yes,Yes,No,Yes,"The number of unique subjects"
-
+cohort_count_neg_ctrl,database_id,varchar,Yes,Yes,No,No,"The database idenifier for this information"
+cohort_count_neg_ctrl,cohort_id,bigint,Yes,Yes,No,No,"The unique identifier for the cohort definition"
+cohort_count_neg_ctrl,cohort_entries,bigint,Yes,Yes,No,Yes,"The number of cohort entries"
+cohort_count_neg_ctrl,cohort_subjects,bigint,Yes,Yes,No,Yes,"The number of unique subjects"
