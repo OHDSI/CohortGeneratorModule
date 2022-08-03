@@ -34,9 +34,9 @@ createCohortGeneratorModuleSpecifications <- function(incremental = TRUE,
   }
   
   specifications <- list(module = "CohortGeneratorModule",
-                         version = "0.0.12-3",
+                         version = "0.0.12",
                          remoteRepo = "github.com",
-                         remoteUsername = "anthonysena",
+                         remoteUsername = "ohdsi",
                          settings = analysis)
   class(specifications) <- c("CohortGeneratorModuleSpecifications", "ModuleSpecifications")
   return(specifications)
