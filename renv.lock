@@ -23,7 +23,7 @@
 		},
 		"rlang" : {
 			"Package" : "rlang",
-			"Version" : "1.0.4",
+			"Version" : "1.0.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -41,7 +41,7 @@
 		},
 		"lifecycle" : {
 			"Package" : "lifecycle",
-			"Version" : "1.0.1",
+			"Version" : "1.0.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -83,19 +83,19 @@
 		},
 		"crayon" : {
 			"Package" : "crayon",
-			"Version" : "1.5.1",
+			"Version" : "1.5.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"hms" : {
 			"Package" : "hms",
-			"Version" : "1.1.1",
+			"Version" : "1.1.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"pillar" : {
 			"Package" : "pillar",
-			"Version" : "1.8.0",
+			"Version" : "1.8.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -197,7 +197,7 @@
 		},
 		"vroom" : {
 			"Package" : "vroom",
-			"Version" : "1.5.7",
+			"Version" : "1.6.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -215,13 +215,13 @@
 		},
 		"jsonlite" : {
 			"Package" : "jsonlite",
-			"Version" : "1.8.0",
+			"Version" : "1.8.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"readr" : {
 			"Package" : "readr",
-			"Version" : "2.1.2",
+			"Version" : "2.1.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -239,7 +239,7 @@
 		},
 		"stringr" : {
 			"Package" : "stringr",
-			"Version" : "1.4.0",
+			"Version" : "1.4.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -257,7 +257,7 @@
 		},
 		"DatabaseConnector" : {
 			"Package" : "DatabaseConnector",
-			"Version" : "5.0.4",
+			"Version" : "5.1.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -269,7 +269,7 @@
 		},
 		"dplyr" : {
 			"Package" : "dplyr",
-			"Version" : "1.0.9",
+			"Version" : "1.0.10",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -341,13 +341,13 @@
 		},
 		"callr" : {
 			"Package" : "callr",
-			"Version" : "3.7.1",
+			"Version" : "3.7.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"evaluate" : {
 			"Package" : "evaluate",
-			"Version" : "0.15",
+			"Version" : "0.16",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -407,7 +407,7 @@
 		},
 		"RSQLite" : {
 			"Package" : "RSQLite",
-			"Version" : "2.2.15",
+			"Version" : "2.2.17",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -425,7 +425,7 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortGenerator",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "c6cb14dfd0ddfd723c62a4a927dca82a5f26522c"
+			"RemoteRef" : "v0.7.0"
 		},
 		"CirceR" : {
 			"Package" : "CirceR",

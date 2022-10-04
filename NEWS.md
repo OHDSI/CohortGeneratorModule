@@ -1,3 +1,13 @@
+CohortGeneratorModule 0.0.13
+=======================
+
+- Using released version of CohortGenerator v0.7.0
+
+CohortGeneratorModule 0.0.12
+=======================
+
+- Using preview version of CohortGenerator v0.7.0
+
 CohortGeneratorModule 0.0.11
 =======================
 
