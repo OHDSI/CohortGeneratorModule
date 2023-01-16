@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.0.14
+=======================
+
+- Updated referenced to CirceR v1.2.1
+
 CohortGeneratorModule 0.0.13
 =======================
 
