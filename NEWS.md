@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.0.5
+=======================
+
+- Add explicit reference to aws.s3 to renv.lock file
+
 CohortGeneratorModule 0.0.14
 =======================
 

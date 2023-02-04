@@ -1,6 +1,6 @@
 {
   "Name": "CohortGeneratorModule",
-  "Version": "0.0.14",
+  "Version": "0.0.15",
   "Dependencies": [],
   "TablePrefix": "cg_"
 }
