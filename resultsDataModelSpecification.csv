@@ -13,7 +13,7 @@ cohort_generation,database_id,varchar,Yes,Yes,No,No,"The database idenifier for 
 cohort_inclusion,cohort_definition_id,bigint,bigint,Yes,No,No,"The unique identifier for the cohort definition"
 cohort_inclusion,rule_sequence,int,Yes,Yes,No,No,"The rule sequence for the inclusion rule"
 cohort_inclusion,name,varchar,Yes,Yes,No,No,"The name of the inclusion rule"
-cohort_inclusion,description,varchar,Yes,Yes,No,No,"The description of the inclusion rule"
+cohort_inclusion,description,varchar,No,No,No,No,"The description of the inclusion rule"
 cohort_inc_result,database_id,varchar,Yes,Yes,No,No,"The database idenifier for this information"
 cohort_inc_result,cohort_definition_id,bigint,Yes,Yes,No,No,"The unique identifier for the cohort definition"
 cohort_inc_result,inclusion_rule_mask,int,Yes,Yes,No,No,"A bit-mask for the inclusion rule"
