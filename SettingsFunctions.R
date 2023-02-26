@@ -60,7 +60,7 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
   
   subsetDefinitions <- CohortGenerator::getSubsetDefinitions(cohortDefinitionSet)
   if (length(subsetDefinitions)) {
-    sharedResource$subsetDefinitions <- lapply(subsetDefinitions, x$toJSON())
+    sharedResource$subsetDefinitions <- lapply(subsetDefinitions, function(x) x$toJSON())
     cohortDefinitionSet <- cohortDefinitionSet[!cohortDefinitionSet$isSubset, ]
   }
   
