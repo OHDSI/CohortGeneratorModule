@@ -194,7 +194,8 @@ getModuleInfo <- function() {
   return(ParallelLogger::loadSettingsFromJson("MetaData.json"))
 }
 
-.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource) {
+# This private function makes testing the call bit easier
+.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource, settings) {
   cohortDefinitions <- cohortDefinitionSharedResource$cohortDefinitions
   if (length(cohortDefinitions) <= 0) {
     stop("No cohort definitions found")
@@ -232,7 +233,7 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
     stop("Cohort definition shared resource not found!")
   }
   
-  cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(cohortDefinitionSharedResource)
+  cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(cohortDefinitionSharedResource, settings)
   return(cohortDefinitionSet)
 }
 
