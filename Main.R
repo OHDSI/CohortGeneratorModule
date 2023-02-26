@@ -221,6 +221,14 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
       stringsAsFactors = FALSE
     ))
   }
+  
+  if (length(cohortDefinitionSharedResource$subsetDefinitions)) {
+    subsetDefinitions <- lapply(cohortDefinitionSharedResource$subsetDefinitions, CohortGenerator::CohortSubsetDefinition$new)
+    for (subsetDef in subsetDefinitions) {
+      cohortDefinitionSet <-  CohortGenerator::addCohortSubsetDefinition(cohortDefinitionSet, subsetDef)
+    }
+  }
+  
   return(cohortDefinitionSet)
 }
 
