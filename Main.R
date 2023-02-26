@@ -194,16 +194,7 @@ getModuleInfo <- function() {
   return(ParallelLogger::loadSettingsFromJson("MetaData.json"))
 }
 
-createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
-  cohortDefinitions <- list()
-  if (length(sharedResources) <= 0) {
-    stop("No shared resources found")
-  }
-  cohortDefinitionSharedResource <- getSharedResourceByClassName(sharedResources = sharedResources, 
-                                                                 class = "CohortDefinitionSharedResources")
-  if (is.null(cohortDefinitionSharedResource)) {
-    stop("Cohort definition shared resource not found!")
-  }
+.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource) {
   cohortDefinitions <- cohortDefinitionSharedResource$cohortDefinitions
   if (length(cohortDefinitions) <= 0) {
     stop("No cohort definitions found")
@@ -228,7 +219,20 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
       cohortDefinitionSet <-  CohortGenerator::addCohortSubsetDefinition(cohortDefinitionSet, subsetDef)
     }
   }
+}
+
+createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
+  cohortDefinitions <- list()
+  if (length(sharedResources) <= 0) {
+    stop("No shared resources found")
+  }
+  cohortDefinitionSharedResource <- getSharedResourceByClassName(sharedResources = sharedResources, 
+                                                                 class = "CohortDefinitionSharedResources")
+  if (is.null(cohortDefinitionSharedResource)) {
+    stop("Cohort definition shared resource not found!")
+  }
   
+  cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(cohortDefinitionSharedResource)
   return(cohortDefinitionSet)
 }
 
