@@ -206,7 +206,7 @@ getModuleInfo <- function() {
     cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
     cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = settings$generateStats))
     cohortDefinitionSet <- rbind(cohortDefinitionSet, data.frame(
-      cohortId = as.integer(cohortDefinitions[[i]]$cohortId),
+      cohortId = as.double(cohortDefinitions[[i]]$cohortId),
       cohortName = cohortDefinitions[[i]]$cohortName,
       sql = cohortSql,
       json = cohortJson,
@@ -220,6 +220,8 @@ getModuleInfo <- function() {
       cohortDefinitionSet <-  CohortGenerator::addCohortSubsetDefinition(cohortDefinitionSet, subsetDef)
     }
   }
+  
+  return(cohortDefinitionSet)
 }
 
 createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
