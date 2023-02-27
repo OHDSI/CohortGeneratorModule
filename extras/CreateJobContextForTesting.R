@@ -25,26 +25,34 @@ getSampleCohortDefintionSet <- function() {
       stringsAsFactors = FALSE
     ))
   }
-  
+
   # Add subsets to the cohort definition set
   maleOnlySubsetOperators <- list(
-    CohortGenerator::createDemographicSubset(id = 1001,
-                                             name = "Gender == Male",
-                                             gender = 8507)
+    CohortGenerator::createDemographicSubset(
+      id = 1001,
+      name = "Gender == Male",
+      gender = 8507
+    )
   )
-  maleOnlySubsetDef <- CohortGenerator::createCohortSubsetDefinition(name = "Males",
-                                                                     definitionId = 1,
-                                                                     subsetOperators = maleOnlySubsetOperators)
+  maleOnlySubsetDef <- CohortGenerator::createCohortSubsetDefinition(
+    name = "Males",
+    definitionId = 1,
+    subsetOperators = maleOnlySubsetOperators
+  )
   # Define a subset for males age 40+
   maleAgeBoundedSubsetOperators <- list(
-    CohortGenerator::createDemographicSubset(id = 1002,
-                                             name = "Gender == Male, Age 40+",
-                                             gender = 8507,
-                                             ageMin = 40)
+    CohortGenerator::createDemographicSubset(
+      id = 1002,
+      name = "Gender == Male, Age 40+",
+      gender = 8507,
+      ageMin = 40
+    )
   )
-  maleAgeBoundedSubsetDef <- CohortGenerator::createCohortSubsetDefinition(name = "Male, Age 40+",
-                                                                           definitionId = 2,
-                                                                           subsetOperators = maleAgeBoundedSubsetOperators)
+  maleAgeBoundedSubsetDef <- CohortGenerator::createCohortSubsetDefinition(
+    name = "Male, Age 40+",
+    definitionId = 2,
+    subsetOperators = maleAgeBoundedSubsetOperators
+  )
 
   sampleCohorts <- sampleCohorts %>%
     CohortGenerator::addCohortSubsetDefinition(maleOnlySubsetDef) %>%
@@ -69,12 +77,15 @@ createCohortSubsetSharedResource <- function(cohortDefinitionSet = getSampleCoho
 
 createNegativeControlSharedResource <- function() {
   negativeControlOutcomes <- readCsv(file = system.file("testdata/negativecontrols/negativecontrolOutcomes.csv",
-                                                        package = "CohortGenerator",
-                                                        mustWork = TRUE))
+    package = "CohortGenerator",
+    mustWork = TRUE
+  ))
   negativeControlOutcomes$cohortId <- negativeControlOutcomes$outcomeConceptId
-  createNegativeControlOutcomeCohortSharedResourceSpecifications(negativeControlOutcomeCohortSet = negativeControlOutcomes,
-                                                                 occurrenceType = "all",
-                                                                 detectOnDescendants = FALSE)
+  createNegativeControlOutcomeCohortSharedResourceSpecifications(
+    negativeControlOutcomeCohortSet = negativeControlOutcomes,
+    occurrenceType = "all",
+    detectOnDescendants = FALSE
+  )
 }
 
 # Create CohortGeneratorModule settings ---------------------------------------
@@ -91,8 +102,8 @@ analysisSpecifications <- createEmptyAnalysisSpecificiations() %>%
   addSharedResources(createNegativeControlSharedResource()) %>%
   addModuleSpecifications(cohortGeneratorModuleSpecifications)
 
-#executionSettings <- Strategus::createExecutionSettings(
-executionSettings <-   Strategus::createCdmExecutionSettings(
+# executionSettings <- Strategus::createExecutionSettings(
+executionSettings <- Strategus::createCdmExecutionSettings(
   connectionDetailsReference = "dummy",
   workDatabaseSchema = "main",
   cdmDatabaseSchema = "main",
@@ -115,4 +126,4 @@ jobContext <- list(
   moduleExecutionSettings = moduleExecutionSettings
 )
 saveRDS(jobContext, "tests/testJobContext.rds")
-#ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
+# ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")

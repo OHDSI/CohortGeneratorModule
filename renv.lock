@@ -93,7 +93,7 @@
     },
     "SqlRender": {
       "Package": "SqlRender",
-      "Version": "1.9.2",
+      "Version": "1.12.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": []
