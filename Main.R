@@ -1,4 +1,4 @@
-# Copyright 2022 Observational Health Data Sciences and Informatics
+# Copyright 2023 Observational Health Data Sciences and Informatics
 #
 # This file is part of CohortGeneratorModule
 #
@@ -27,19 +27,19 @@ execute <- function(jobContext) {
   if (is.null(jobContext$moduleExecutionSettings)) {
     stop("Execution settings not found in job context")
   }
-  
+
   # Create the cohort definition set
   cohortDefinitionSet <- createCohortDefinitionSetFromJobContext(
     sharedResources = jobContext$sharedResources,
     settings = jobContext$settings
   )
-  
+
   rlang::inform("Executing")
   # Establish the connection and ensure the cleanup is performed
   connection <- DatabaseConnector::connect(jobContext$moduleExecutionSettings$connectionDetails)
   on.exit(DatabaseConnector::disconnect(connection))
-  
-  
+
+
   # Create the cohort tables
   CohortGenerator::createCohortTables(
     connection = connection,
@@ -47,7 +47,7 @@ execute <- function(jobContext) {
     cohortTableNames = jobContext$moduleExecutionSettings$cohortTableNames,
     incremental = jobContext$settings$incremental
   )
-  
+
   # Generate the cohorts
   cohortsGenerated <- CohortGenerator::generateCohortSet(
     connection = connection,
@@ -58,14 +58,14 @@ execute <- function(jobContext) {
     incremental = jobContext$settings$incremental,
     incrementalFolder = jobContext$moduleExecutionSettings$workSubFolder
   )
-  
+
   # Export the results
   rlang::inform("Export data")
   resultsFolder <- jobContext$moduleExecutionSettings$resultsSubFolder
   if (!dir.exists(resultsFolder)) {
     dir.create(resultsFolder, recursive = TRUE)
   }
-  
+
   # Save the generation information
   if (nrow(cohortsGenerated) > 0) {
     cohortsGenerated$databaseId <- jobContext$moduleExecutionSettings$databaseId
@@ -87,25 +87,27 @@ execute <- function(jobContext) {
       )
     }
   }
-  
+
   cohortCounts <- CohortGenerator::getCohortCounts(
     connection = connection,
     cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
     cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
-  
+
   CohortGenerator::writeCsv(
     x = cohortCounts,
     file = file.path(resultsFolder, "cohort_count.csv")
   )
-  
+
   # Insert the inclusion rule names before exporting the stats tables
-  CohortGenerator::insertInclusionRuleNames(connection = connection,
-                                            cohortDefinitionSet = cohortDefinitionSet,
-                                            cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
-                                            cohortInclusionTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortInclusionTable)
-  
+  CohortGenerator::insertInclusionRuleNames(
+    connection = connection,
+    cohortDefinitionSet = cohortDefinitionSet,
+    cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
+    cohortInclusionTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortInclusionTable
+  )
+
   CohortGenerator::exportCohortStatsTables(
     connection = connection,
     cohortTableNames = jobContext$moduleExecutionSettings$cohortTableNames,
@@ -116,28 +118,32 @@ execute <- function(jobContext) {
     incremental = jobContext$settings$incremental,
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
-  
+
   # Massage and save the cohort definition set
+  colsToRename <- c("cohortId", "cohortName", "sql", "json")
+  colInd <- which(names(cohortDefinitionSet) %in% colsToRename)
   cohortDefinitions <- cohortDefinitionSet
-  names(cohortDefinitions) <- c("cohortDefinitionId", "cohortName", "sqlCommand", "json")
+  names(cohortDefinitions)[colInd] <- c("cohortDefinitionId", "cohortName", "sqlCommand", "json")
   cohortDefinitions$description <- ""
   CohortGenerator::writeCsv(
     x = cohortDefinitions,
     file = file.path(resultsFolder, "cohort_definition.csv")
   )
-  
+
   # Generate any negative controls
   if (jobContextHasNegativeControlOutcomeSharedResource(jobContext)) {
     negativeControlOutcomeSettings <- createNegativeControlOutcomeSettingsFromJobContext(jobContext)
-    
-    CohortGenerator::generateNegativeControlOutcomeCohorts(connection = connection,
-                                                           cdmDatabaseSchema = jobContext$moduleExecutionSettings$cdmDatabaseSchema,
-                                                           cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
-                                                           cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
-                                                           negativeControlOutcomeCohortSet = negativeControlOutcomeSettings$cohortSet,
-                                                           occurrenceType = negativeControlOutcomeSettings$occurrenceType,
-                                                           detectOnDescendants = negativeControlOutcomeSettings$detectOnDescendants)
-    
+
+    CohortGenerator::generateNegativeControlOutcomeCohorts(
+      connection = connection,
+      cdmDatabaseSchema = jobContext$moduleExecutionSettings$cdmDatabaseSchema,
+      cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
+      cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
+      negativeControlOutcomeCohortSet = negativeControlOutcomeSettings$cohortSet,
+      occurrenceType = negativeControlOutcomeSettings$occurrenceType,
+      detectOnDescendants = negativeControlOutcomeSettings$detectOnDescendants
+    )
+
     CohortCountsNegativeControlOutcomes <- CohortGenerator::getCohortCounts(
       connection = connection,
       cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
@@ -145,14 +151,14 @@ execute <- function(jobContext) {
       databaseId = jobContext$moduleExecutionSettings$databaseId,
       cohortIds = negativeControlOutcomeSettings$cohortSet$cohortId
     )
-    
+
     CohortGenerator::writeCsv(
       x = CohortCountsNegativeControlOutcomes,
       file = file.path(resultsFolder, "cohort_count_neg_ctrl.csv")
     )
   }
-  
-  
+
+
   # Set the table names in resultsDataModelSpecification.csv
   moduleInfo <- getModuleInfo()
   resultsDataModel <- CohortGenerator::readCsv(
@@ -172,11 +178,11 @@ execute <- function(jobContext) {
     warnOnFileNameCaseMismatch = FALSE,
     warnOnUploadRuleViolations = FALSE
   )
-  
+
   # Zip the results
   zipFile <- file.path(resultsFolder, "cohortGeneratorResults.zip")
   resultFiles <- list.files(resultsFolder,
-                            pattern = ".*\\.csv$"
+    pattern = ".*\\.csv$"
   )
   oldWd <- setwd(resultsFolder)
   on.exit(setwd(oldWd), add = TRUE)
@@ -194,16 +200,8 @@ getModuleInfo <- function() {
   return(ParallelLogger::loadSettingsFromJson("MetaData.json"))
 }
 
-createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
-  cohortDefinitions <- list()
-  if (length(sharedResources) <= 0) {
-    stop("No shared resources found")
-  }
-  cohortDefinitionSharedResource <- getSharedResourceByClassName(sharedResources = sharedResources, 
-                                                                 class = "CohortDefinitionSharedResources")
-  if (is.null(cohortDefinitionSharedResource)) {
-    stop("Cohort definition shared resource not found!")
-  }
+# This private function makes testing the call bit easier
+.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource, cohortSubsetDefSharedResource, cohortSubsetSharedResource, settings) {
   cohortDefinitions <- cohortDefinitionSharedResource$cohortDefinitions
   if (length(cohortDefinitions) <= 0) {
     stop("No cohort definitions found")
@@ -214,26 +212,86 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
     cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
     cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = settings$generateStats))
     cohortDefinitionSet <- rbind(cohortDefinitionSet, data.frame(
-      cohortId = as.integer(cohortDefinitions[[i]]$cohortId),
+      cohortId = as.double(cohortDefinitions[[i]]$cohortId),
       cohortName = cohortDefinitions[[i]]$cohortName,
       sql = cohortSql,
       json = cohortJson,
       stringsAsFactors = FALSE
     ))
   }
+
+  if (length(cohortSubsetDefSharedResource$subsetDefs)) {
+    subsetDefinitions <- lapply(cohortSubsetDefSharedResource$subsetDefs, CohortGenerator::CohortSubsetDefinition$new)
+    for (subsetDef in subsetDefinitions) {
+      ind <- which(sapply(cohortSubsetSharedResource$cohortSubsets, function(y) subsetDef$definitionId %in% y$subsetId))
+      targetCohortIds <- unlist(lapply(cohortSubsetSharedResource$cohortSubsets[ind], function(y) y$targetCohortId))
+      cohortDefinitionSet <- CohortGenerator::addCohortSubsetDefinition(
+        cohortDefinitionSet = cohortDefinitionSet,
+        cohortSubsetDefintion = subsetDef,
+        targetCohortIds = targetCohortIds
+      )
+    }
+  }
+
+  return(cohortDefinitionSet)
+}
+
+createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
+  cohortDefinitions <- list()
+  if (length(sharedResources) <= 0) {
+    stop("No shared resources found")
+  }
+  cohortDefinitionSharedResource <- getSharedResourceByClassName(
+    sharedResources = sharedResources,
+    class = "CohortDefinitionSharedResources"
+  )
+  if (is.null(cohortDefinitionSharedResource)) {
+    stop("Cohort definition shared resource not found!")
+  }
+
+  # Get the subset definition & subsets
+  cohortSubsetDefSharedResource <- getSharedResourceByClassName(
+    sharedResources = sharedResources,
+    class = "CohortSubsetDefinitionSharedResources"
+  )
+  cohortSubsetSharedResource <- getSharedResourceByClassName(
+    sharedResources = sharedResources,
+    class = "CohortSubsetSharedResources"
+  )
+
+  # Cohort subsetting is optional - you either need to specify both cohortSubsetDefSharedResource & cohortSubsetSharedResource
+  # or leave it missing all together
+  cohortSubsetFullySpecified <- !(is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))
+  cohortSubsetNotSpecified <- (is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))
+
+  if ((is.null(cohortSubsetDefSharedResource) && !is.null(cohortSubsetSharedResource)) ||
+    (!is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))) {
+    stop("Cohort subset functionality requires specifying cohort subset definition & cohort subset identifiers.")
+  }
+
+  cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(
+    cohortDefinitionSharedResource = cohortDefinitionSharedResource,
+    cohortSubsetDefSharedResource = cohortSubsetDefSharedResource,
+    cohortSubsetSharedResource = cohortSubsetSharedResource,
+    settings = settings
+  )
   return(cohortDefinitionSet)
 }
 
 jobContextHasNegativeControlOutcomeSharedResource <- function(jobContext) {
-  ncSharedResource <- getSharedResourceByClassName(sharedResources = jobContext$sharedResources,
-                                                   className = "NegativeControlOutcomeSharedResources")
+  ncSharedResource <- getSharedResourceByClassName(
+    sharedResources = jobContext$sharedResources,
+    className = "NegativeControlOutcomeSharedResources"
+  )
   hasNegativeControlOutcomeSharedResource <- !is.null(ncSharedResource)
   invisible(hasNegativeControlOutcomeSharedResource)
 }
 
 createNegativeControlOutcomeSettingsFromJobContext <- function(jobContext) {
-  negativeControlSharedResource <- getSharedResourceByClassName(sharedResources = jobContext$sharedResources,
-                                                                className = "NegativeControlOutcomeSharedResources")
+  negativeControlSharedResource <- getSharedResourceByClassName(
+    sharedResources = jobContext$sharedResources,
+    className = "NegativeControlOutcomeSharedResources"
+  )
   if (is.null(negativeControlSharedResource)) {
     stop("Negative control outcome shared resource not found!")
   }
@@ -244,14 +302,20 @@ createNegativeControlOutcomeSettingsFromJobContext <- function(jobContext) {
   negativeControlOutcomeCohortSet <- CohortGenerator::createEmptyNegativeControlOutcomeCohortSet()
   for (i in 1:length(negativeControlOutcomes)) {
     nc <- negativeControlOutcomes[[i]]
-    negativeControlOutcomeCohortSet <- rbind(negativeControlOutcomeCohortSet,
-                                             data.frame(cohortId = bit64::as.integer64(nc$cohortId) ,
-                                                        cohortName = nc$cohortName,
-                                                        outcomeConceptId = bit64::as.integer64(nc$outcomeConceptId)))
+    negativeControlOutcomeCohortSet <- rbind(
+      negativeControlOutcomeCohortSet,
+      data.frame(
+        cohortId = bit64::as.integer64(nc$cohortId),
+        cohortName = nc$cohortName,
+        outcomeConceptId = bit64::as.integer64(nc$outcomeConceptId)
+      )
+    )
   }
-  invisible(list(cohortSet = negativeControlOutcomeCohortSet,
-                 occurrenceType = negativeControlSharedResource$negativeControlOutcomes$occurrenceType,
-                 detectOnDescendants = negativeControlSharedResource$negativeControlOutcomes$detectOnDescendants))
+  invisible(list(
+    cohortSet = negativeControlOutcomeCohortSet,
+    occurrenceType = negativeControlSharedResource$negativeControlOutcomes$occurrenceType,
+    detectOnDescendants = negativeControlSharedResource$negativeControlOutcomes$detectOnDescendants
+  ))
 }
 
 getSharedResourceByClassName <- function(sharedResources, className) {
