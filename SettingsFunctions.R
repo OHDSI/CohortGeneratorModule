@@ -130,7 +130,7 @@ createCohortSubsetSharedResourceSpecifications <- function(cohortDefinitionSet) 
     for (i in 1:nrow(cohortDefinitionSet)) {
       idMapping <- list(cohortId = cohortDefinitionSet$cohortId[i],
                         subsetId = cohortDefinitionSet$subsetDefinitionId[i],
-                        targetCohortDefinition = cohortDefinitionSet$subsetParent[i])
+                        targetCohortId = cohortDefinitionSet$subsetParent[i])
       if (i == 1) {
         subsetIdMapping <- list(idMapping)
       } else {
