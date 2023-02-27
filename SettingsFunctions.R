@@ -55,11 +55,21 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
   if (!CohortGenerator::isCohortDefinitionSet(cohortDefinitionSet)) {
     stop("cohortDefinitionSet is not properly defined")
   }
+  
+  sharedResource <- list()
+  
+  subsetDefinitions <- CohortGenerator::getSubsetDefinitions(cohortDefinitionSet)
+  if (length(subsetDefinitions)) {
+    sharedResource$subsetDefinitions <- lapply(subsetDefinitions, function(x) { x$toJSON()})
+    cohortDefinitionSet <- cohortDefinitionSet[!cohortDefinitionSet$isSubset, ]
+  }
+  
   cohortDefinitionSet <- cohortDefinitionSet[,c("cohortId", "cohortName", "json")]
   names(cohortDefinitionSet) <- c("cohortId", "cohortName", "cohortDefinition")
   print(cohortDefinitionSet[,c("cohortId", "cohortName")])
   cohortDefinitionSet <- apply(cohortDefinitionSet, 1, as.list)
-  sharedResource <- list(cohortDefinitions = cohortDefinitionSet)
+  sharedResource$cohortDefinitions <- cohortDefinitionSet
+   
   class(sharedResource) <- c("CohortDefinitionSharedResources", "SharedResources")
   return(sharedResource)
 }

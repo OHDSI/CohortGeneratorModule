@@ -194,16 +194,8 @@ getModuleInfo <- function() {
   return(ParallelLogger::loadSettingsFromJson("MetaData.json"))
 }
 
-createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
-  cohortDefinitions <- list()
-  if (length(sharedResources) <= 0) {
-    stop("No shared resources found")
-  }
-  cohortDefinitionSharedResource <- getSharedResourceByClassName(sharedResources = sharedResources, 
-                                                                 class = "CohortDefinitionSharedResources")
-  if (is.null(cohortDefinitionSharedResource)) {
-    stop("Cohort definition shared resource not found!")
-  }
+# This private function makes testing the call bit easier
+.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource, settings) {
   cohortDefinitions <- cohortDefinitionSharedResource$cohortDefinitions
   if (length(cohortDefinitions) <= 0) {
     stop("No cohort definitions found")
@@ -214,13 +206,36 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
     cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
     cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = settings$generateStats))
     cohortDefinitionSet <- rbind(cohortDefinitionSet, data.frame(
-      cohortId = as.integer(cohortDefinitions[[i]]$cohortId),
+      cohortId = as.double(cohortDefinitions[[i]]$cohortId),
       cohortName = cohortDefinitions[[i]]$cohortName,
       sql = cohortSql,
       json = cohortJson,
       stringsAsFactors = FALSE
     ))
   }
+  
+  if (length(cohortDefinitionSharedResource$subsetDefinitions)) {
+    subsetDefinitions <- lapply(cohortDefinitionSharedResource$subsetDefinitions, CohortGenerator::CohortSubsetDefinition$new)
+    for (subsetDef in subsetDefinitions) {
+      cohortDefinitionSet <-  CohortGenerator::addCohortSubsetDefinition(cohortDefinitionSet, subsetDef)
+    }
+  }
+  
+  return(cohortDefinitionSet)
+}
+
+createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
+  cohortDefinitions <- list()
+  if (length(sharedResources) <= 0) {
+    stop("No shared resources found")
+  }
+  cohortDefinitionSharedResource <- getSharedResourceByClassName(sharedResources = sharedResources, 
+                                                                 class = "CohortDefinitionSharedResources")
+  if (is.null(cohortDefinitionSharedResource)) {
+    stop("Cohort definition shared resource not found!")
+  }
+  
+  cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(cohortDefinitionSharedResource, settings)
   return(cohortDefinitionSet)
 }
 
