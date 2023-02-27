@@ -18,18 +18,52 @@ getSampleCohortDefintionSet <- function() {
     cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
     cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
     sampleCohorts <- rbind(sampleCohorts, data.frame(
-      cohortId = bit64::as.integer64(i),
+      cohortId = as.double(i),
       cohortName = cohortName,
       json = cohortJson,
       sql = "",
       stringsAsFactors = FALSE
     ))
   }
+  
+  # Add subsets to the cohort definition set
+  maleOnlySubsetOperators <- list(
+    CohortGenerator::createDemographicSubset(id = 1001,
+                                             name = "Gender == Male",
+                                             gender = 8507)
+  )
+  maleOnlySubsetDef <- CohortGenerator::createCohortSubsetDefinition(name = "Males",
+                                                                     definitionId = 1,
+                                                                     subsetOperators = maleOnlySubsetOperators)
+  # Define a subset for males age 40+
+  maleAgeBoundedSubsetOperators <- list(
+    CohortGenerator::createDemographicSubset(id = 1002,
+                                             name = "Gender == Male, Age 40+",
+                                             gender = 8507,
+                                             ageMin = 40)
+  )
+  maleAgeBoundedSubsetDef <- CohortGenerator::createCohortSubsetDefinition(name = "Male, Age 40+",
+                                                                           definitionId = 2,
+                                                                           subsetOperators = maleAgeBoundedSubsetOperators)
+
+  sampleCohorts <- sampleCohorts %>%
+    CohortGenerator::addCohortSubsetDefinition(maleOnlySubsetDef) %>%
+    CohortGenerator::addCohortSubsetDefinition(maleAgeBoundedSubsetDef)
   return(sampleCohorts)
 }
 
 createCohortSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
   sharedResource <- createCohortSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
+  return(sharedResource)
+}
+
+createCohortSubsetDefinitionSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
+  sharedResource <- createCohortSubsetDefinitionSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
+  return(sharedResource)
+}
+
+createCohortSubsetSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
+  sharedResource <- createCohortSubsetSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
   return(sharedResource)
 }
 
@@ -52,6 +86,8 @@ cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications
 # Module Settings Spec ----------------------------
 analysisSpecifications <- createEmptyAnalysisSpecificiations() %>%
   addSharedResources(createCohortSharedResource()) %>%
+  addSharedResources(createCohortSubsetDefinitionSharedResource()) %>%
+  addSharedResources(createCohortSubsetSharedResource()) %>%
   addSharedResources(createNegativeControlSharedResource()) %>%
   addModuleSpecifications(cohortGeneratorModuleSpecifications)
 
@@ -79,3 +115,4 @@ jobContext <- list(
   moduleExecutionSettings = moduleExecutionSettings
 )
 saveRDS(jobContext, "tests/testJobContext.rds")
+#ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
