@@ -65,16 +65,6 @@ createCohortSharedResource <- function(cohortDefinitionSet = getSampleCohortDefi
   return(sharedResource)
 }
 
-createCohortSubsetDefinitionSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
-  sharedResource <- createCohortSubsetDefinitionSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
-  return(sharedResource)
-}
-
-createCohortSubsetSharedResource <- function(cohortDefinitionSet = getSampleCohortDefintionSet()) {
-  sharedResource <- createCohortSubsetSharedResourceSpecifications(cohortDefinitionSet = cohortDefinitionSet)
-  return(sharedResource)
-}
-
 createNegativeControlSharedResource <- function() {
   negativeControlOutcomes <- readCsv(file = system.file("testdata/negativecontrols/negativecontrolOutcomes.csv",
     package = "CohortGenerator",
@@ -97,8 +87,6 @@ cohortGeneratorModuleSpecifications <- createCohortGeneratorModuleSpecifications
 # Module Settings Spec ----------------------------
 analysisSpecifications <- createEmptyAnalysisSpecificiations() %>%
   addSharedResources(createCohortSharedResource()) %>%
-  addSharedResources(createCohortSubsetDefinitionSharedResource()) %>%
-  addSharedResources(createCohortSubsetSharedResource()) %>%
   addSharedResources(createNegativeControlSharedResource()) %>%
   addModuleSpecifications(cohortGeneratorModuleSpecifications)
 
@@ -126,4 +114,4 @@ jobContext <- list(
   moduleExecutionSettings = moduleExecutionSettings
 )
 saveRDS(jobContext, "tests/testJobContext.rds")
-# ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
+#ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
