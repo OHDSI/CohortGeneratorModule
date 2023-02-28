@@ -201,7 +201,7 @@ getModuleInfo <- function() {
 }
 
 # This private function makes testing the call bit easier
-.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource, cohortSubsetDefSharedResource, cohortSubsetSharedResource, settings) {
+.getCohortDefinitionSetFromSharedResource <- function(cohortDefinitionSharedResource, settings) {
   cohortDefinitions <- cohortDefinitionSharedResource$cohortDefinitions
   if (length(cohortDefinitions) <= 0) {
     stop("No cohort definitions found")
@@ -220,11 +220,11 @@ getModuleInfo <- function() {
     ))
   }
 
-  if (length(cohortSubsetDefSharedResource$subsetDefs)) {
-    subsetDefinitions <- lapply(cohortSubsetDefSharedResource$subsetDefs, CohortGenerator::CohortSubsetDefinition$new)
+  if (length(cohortDefinitionSharedResource$subsetDefs)) {
+    subsetDefinitions <- lapply(cohortDefinitionSharedResource$subsetDefs, CohortGenerator::CohortSubsetDefinition$new)
     for (subsetDef in subsetDefinitions) {
-      ind <- which(sapply(cohortSubsetSharedResource$cohortSubsets, function(y) subsetDef$definitionId %in% y$subsetId))
-      targetCohortIds <- unlist(lapply(cohortSubsetSharedResource$cohortSubsets[ind], function(y) y$targetCohortId))
+      ind <- which(sapply(cohortDefinitionSharedResource$cohortSubsets, function(y) subsetDef$definitionId %in% y$subsetId))
+      targetCohortIds <- unlist(lapply(cohortDefinitionSharedResource$cohortSubsets[ind], function(y) y$targetCohortId))
       cohortDefinitionSet <- CohortGenerator::addCohortSubsetDefinition(
         cohortDefinitionSet = cohortDefinitionSet,
         cohortSubsetDefintion = subsetDef,
@@ -249,30 +249,13 @@ createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
     stop("Cohort definition shared resource not found!")
   }
 
-  # Get the subset definition & subsets
-  cohortSubsetDefSharedResource <- getSharedResourceByClassName(
-    sharedResources = sharedResources,
-    class = "CohortSubsetDefinitionSharedResources"
-  )
-  cohortSubsetSharedResource <- getSharedResourceByClassName(
-    sharedResources = sharedResources,
-    class = "CohortSubsetSharedResources"
-  )
-
-  # Cohort subsetting is optional - you either need to specify both cohortSubsetDefSharedResource & cohortSubsetSharedResource
-  # or leave it missing all together
-  cohortSubsetFullySpecified <- !(is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))
-  cohortSubsetNotSpecified <- (is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))
-
-  if ((is.null(cohortSubsetDefSharedResource) && !is.null(cohortSubsetSharedResource)) ||
-    (!is.null(cohortSubsetDefSharedResource) && is.null(cohortSubsetSharedResource))) {
+  if ((is.null(cohortDefinitionSharedResource$subsetDefs) && !is.null(cohortDefinitionSharedResource$cohortSubsets)) ||
+    (!is.null(cohortDefinitionSharedResource$subsetDefs) && is.null(cohortDefinitionSharedResource$cohortSubsets))) {
     stop("Cohort subset functionality requires specifying cohort subset definition & cohort subset identifiers.")
   }
 
   cohortDefinitionSet <- .getCohortDefinitionSetFromSharedResource(
     cohortDefinitionSharedResource = cohortDefinitionSharedResource,
-    cohortSubsetDefSharedResource = cohortSubsetDefSharedResource,
-    cohortSubsetSharedResource = cohortSubsetSharedResource,
     settings = settings
   )
   return(cohortDefinitionSet)
