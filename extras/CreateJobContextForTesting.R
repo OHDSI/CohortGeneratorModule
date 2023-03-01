@@ -53,10 +53,35 @@ getSampleCohortDefintionSet <- function() {
     definitionId = 2,
     subsetOperators = maleAgeBoundedSubsetOperators
   )
+  
+  subsetDef1 <- CohortGenerator::createCohortSubsetDefinition(
+    name = "Celecoxib new users, male >= 18, any exposure to celecoxib",
+    definitionId = 3,
+    subsetOperators = list(
+      CohortGenerator::createCohortSubset(id = 1,
+                                          name = "Restrict to those with prior celecoxib",
+                                          cohortIds = 1,
+                                          negate = FALSE,
+                                          cohortCombinationOperator = "all",
+                                          startWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart"),
+                                          endWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart")),
+      CohortGenerator::createLimitSubset(id = 2,
+                                         name = "Earlist event",
+                                         priorTime = 365,
+                                         followUpTime = 1,
+                                         limitTo = "firstEver"),
+      CohortGenerator::createDemographicSubset(id = 3,
+                                               name = "Male and age 18+",
+                                               ageMin = 18,
+                                               gender = 8507)
+    )
+  )
+  
 
   sampleCohorts <- sampleCohorts %>%
     CohortGenerator::addCohortSubsetDefinition(maleOnlySubsetDef) %>%
-    CohortGenerator::addCohortSubsetDefinition(maleAgeBoundedSubsetDef)
+    CohortGenerator::addCohortSubsetDefinition(maleAgeBoundedSubsetDef) %>%
+    CohortGenerator::addCohortSubsetDefinition(subsetDef1)
   return(sampleCohorts)
 }
 
