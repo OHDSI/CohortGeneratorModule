@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.1.0
+=======================
+
+- Use CohortGenerator v0.8.0 to support cohort subsets
+
 CohortGeneratorModule 0.0.16-1
 =======================
 

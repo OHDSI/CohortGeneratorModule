@@ -35,7 +35,7 @@ createCohortGeneratorModuleSpecifications <- function(incremental = TRUE,
 
   specifications <- list(
     module = "CohortGeneratorModule",
-    version = "0.0.16-3",
+    version = "0.1.0",
     remoteRepo = "github.com",
     remoteUsername = "ohdsi",
     settings = analysis
@@ -57,7 +57,7 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
   if (!CohortGenerator::isCohortDefinitionSet(cohortDefinitionSet)) {
     stop("cohortDefinitionSet is not properly defined")
   }
-  
+
   subsetDefinitions <- CohortGenerator::getSubsetDefinitions(cohortDefinitionSet)
   if (length(subsetDefinitions) > 0) {
     # Filter the cohort definition set to the "parent" cohorts.
@@ -65,9 +65,9 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
   } else {
     parentCohortDefinitionSet <- cohortDefinitionSet
   }
-  
+
   sharedResource <- list()
-  
+
   listafy <- function(df) {
     mylist <- list()
     for (i in 1:nrow(df)) {
@@ -80,17 +80,17 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
     }
     return(mylist)
   }
-  
+
   cohortDefinitionSetFiltered <- listafy(parentCohortDefinitionSet)
   sharedResource["cohortDefinitions"] <- list(cohortDefinitionSetFiltered)
-  
+
   if (length(subsetDefinitions)) {
     # Subset definitions
     subsetDefinitionsJson <- lapply(subsetDefinitions, function(x) {
       x$toJSON()
     })
     sharedResource["subsetDefs"] <- list(subsetDefinitionsJson)
-    
+
     # Filter to the subsets
     subsetCohortDefinitionSet <- cohortDefinitionSet[cohortDefinitionSet$isSubset, ]
     subsetIdMapping <- list()
@@ -104,8 +104,8 @@ createCohortSharedResourceSpecifications <- function(cohortDefinitionSet) {
     }
     sharedResource["cohortSubsets"] <- list(subsetIdMapping)
   }
-  
-  
+
+
   class(sharedResource) <- c("CohortDefinitionSharedResources", "SharedResources")
   return(sharedResource)
 }

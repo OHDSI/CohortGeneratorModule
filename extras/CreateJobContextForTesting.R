@@ -29,7 +29,6 @@ getSampleCohortDefintionSet <- function() {
   # Add subsets to the cohort definition set
   maleOnlySubsetOperators <- list(
     CohortGenerator::createDemographicSubset(
-      id = 1001,
       name = "Gender == Male",
       gender = 8507
     )
@@ -42,7 +41,6 @@ getSampleCohortDefintionSet <- function() {
   # Define a subset for males age 40+
   maleAgeBoundedSubsetOperators <- list(
     CohortGenerator::createDemographicSubset(
-      id = 1002,
       name = "Gender == Male, Age 40+",
       gender = 8507,
       ageMin = 40
@@ -53,30 +51,33 @@ getSampleCohortDefintionSet <- function() {
     definitionId = 2,
     subsetOperators = maleAgeBoundedSubsetOperators
   )
-  
+
   subsetDef1 <- CohortGenerator::createCohortSubsetDefinition(
     name = "Celecoxib new users, male >= 18, any exposure to celecoxib",
     definitionId = 3,
     subsetOperators = list(
-      CohortGenerator::createCohortSubset(id = 1,
-                                          name = "Restrict to those with prior celecoxib",
-                                          cohortIds = 1,
-                                          negate = FALSE,
-                                          cohortCombinationOperator = "all",
-                                          startWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart"),
-                                          endWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart")),
-      CohortGenerator::createLimitSubset(id = 2,
-                                         name = "Earlist event",
-                                         priorTime = 365,
-                                         followUpTime = 1,
-                                         limitTo = "firstEver"),
-      CohortGenerator::createDemographicSubset(id = 3,
-                                               name = "Male and age 18+",
-                                               ageMin = 18,
-                                               gender = 8507)
+      CohortGenerator::createCohortSubset(
+        name = "Restrict to those with prior celecoxib",
+        cohortIds = 1,
+        negate = FALSE,
+        cohortCombinationOperator = "all",
+        startWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart"),
+        endWindow = CohortGenerator::createSubsetCohortWindow(-99999, 99999, "cohortStart")
+      ),
+      CohortGenerator::createLimitSubset(
+        name = "Earlist event",
+        priorTime = 365,
+        followUpTime = 1,
+        limitTo = "firstEver"
+      ),
+      CohortGenerator::createDemographicSubset(
+        name = "Male and age 18+",
+        ageMin = 18,
+        gender = 8507
+      )
     )
   )
-  
+
 
   sampleCohorts <- sampleCohorts %>%
     CohortGenerator::addCohortSubsetDefinition(maleOnlySubsetDef) %>%
@@ -139,4 +140,4 @@ jobContext <- list(
   moduleExecutionSettings = moduleExecutionSettings
 )
 saveRDS(jobContext, "tests/testJobContext.rds")
-#ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
+# ParallelLogger::saveSettingsToJson(analysisSpecifications, fileName = "extras/analysisSettings.json")
