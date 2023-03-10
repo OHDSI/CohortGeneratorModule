@@ -1,4 +1,20 @@
-CohortGeneratorModule 0.0.5
+CohortGeneratorModule 0.1.0
+=======================
+
+- Use CohortGenerator v0.8.0 to support cohort subsets
+
+CohortGeneratorModule 0.0.16-1
+=======================
+
+- Bump CohortGenerator to develop branch to test subset functionality
+- Bump DatabaseConnector & SqlRender to fix #15
+
+CohortGeneratorModule 0.0.16
+=======================
+
+- Make inclusion rule description optional (#14)
+
+CohortGeneratorModule 0.0.15
 =======================
 
 - Add explicit reference to aws.s3 to renv.lock file
