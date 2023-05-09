@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.1.1
+=======================
+
+Bump dependencies and add keyring, Strategus as dependencies
+
 CohortGeneratorModule 0.1.0
 =======================
 

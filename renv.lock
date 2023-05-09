@@ -11,13 +11,13 @@
   "Packages": {
     "CirceR": {
       "Package": "CirceR",
-      "Version": "1.2.1",
+      "Version": "1.3.0",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "CirceR",
       "RemoteUsername": "ohdsi",
-      "RemoteRef": "v1.2.1",
+      "RemoteRef": "v1.3.0",
       "Requirements": []
     },
     "CohortGenerator": {
@@ -40,9 +40,8 @@
     },
     "DatabaseConnector": {
       "Package": "DatabaseConnector",
-      "Version": "6.0.0",
+      "Version": "6.2.0",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "Eunomia": {
@@ -54,6 +53,12 @@
       "RemoteRepo": "Eunomia",
       "RemoteUsername": "ohdsi",
       "RemoteRef": "v1.0.2",
+      "Requirements": []
+    },
+    "Matrix": {
+      "Package": "Matrix",
+      "Version": "1.5-4",
+      "Source": "Repository",
       "Requirements": []
     },
     "ParallelLogger": {
@@ -93,9 +98,19 @@
     },
     "SqlRender": {
       "Package": "SqlRender",
-      "Version": "1.12.1",
+      "Version": "1.15.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Requirements": []
+    },
+    "Strategus": {
+      "Package": "Strategus",
+      "Version": "0.0.5",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "ohdsi",
+      "RemoteRepo": "Strategus",
+      "RemoteRef": "v0.0.5",
       "Requirements": []
     },
     "aws.s3": {
@@ -162,9 +177,8 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "3.3.0",
+      "Version": "3.6.1",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "clipr": {
@@ -211,9 +225,8 @@
     },
     "dplyr": {
       "Package": "dplyr",
-      "Version": "1.0.10",
+      "Version": "1.1.2",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "ellipsis": {
@@ -279,11 +292,22 @@
       "Repository": "CRAN",
       "Requirements": []
     },
+    "keyring": {
+      "Package": "keyring",
+      "Version": "1.3.1",
+      "Source": "Repository",
+      "Requirements": []
+    },
+    "lattice": {
+      "Package": "lattice",
+      "Version": "0.21-8",
+      "Source": "Repository",
+      "Requirements": []
+    },
     "lifecycle": {
       "Package": "lifecycle",
-      "Version": "1.0.2",
+      "Version": "1.0.3",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "lubridate": {
@@ -309,9 +333,8 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.8.1",
+      "Version": "1.9.0",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "pkgconfig": {
@@ -372,9 +395,8 @@
     },
     "purrr": {
       "Package": "purrr",
-      "Version": "0.3.4",
+      "Version": "1.0.1",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "rJava": {
@@ -400,16 +422,14 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.15.5",
+      "Version": "0.17.3",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "1.0.5",
+      "Version": "1.1.1",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "rprojroot": {
@@ -449,16 +469,14 @@
     },
     "tibble": {
       "Package": "tibble",
-      "Version": "3.1.8",
+      "Version": "3.2.1",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "tidyselect": {
       "Package": "tidyselect",
-      "Version": "1.1.2",
+      "Version": "1.2.0",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "triebeard": {
@@ -491,9 +509,8 @@
     },
     "vctrs": {
       "Package": "vctrs",
-      "Version": "0.4.1",
+      "Version": "0.6.2",
       "Source": "Repository",
-      "Repository": "CRAN",
       "Requirements": []
     },
     "vroom": {
