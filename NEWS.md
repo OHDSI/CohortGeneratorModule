@@ -2,6 +2,7 @@ CohortGeneratorModule 0.1.1
 =======================
 
 Bump dependencies and add keyring, Strategus as dependencies
+Bug fixes for Google BigQuery - thanks @ablack3
 
 CohortGeneratorModule 0.1.0
 =======================
