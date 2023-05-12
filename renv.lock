@@ -27,8 +27,8 @@
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "CohortGenerator",
-      "RemoteUsername": "ohdsi",
-      "RemoteRef": "v0.8.0",
+      "RemoteUsername": "ablack3",
+      "RemoteRef": "main",
       "Requirements": []
     },
     "DBI": {
