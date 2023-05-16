@@ -140,6 +140,7 @@ execute <- function(jobContext) {
       cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
       cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
       negativeControlOutcomeCohortSet = negativeControlOutcomeSettings$cohortSet,
+      tempEmulationSchema = jobContext$moduleExecutionSettings$tempEmulationSchema,
       occurrenceType = negativeControlOutcomeSettings$occurrenceType,
       detectOnDescendants = negativeControlOutcomeSettings$detectOnDescendants
     )
