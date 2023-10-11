@@ -1,3 +1,7 @@
+CohortGeneratorModule 0.2.1
+=======================
+- Update to use CohortGenerator v0.8.1
+
 CohortGeneratorModule 0.2.0
 =======================
 - Updated module to use HADES wide lock file and updated to use renv v1.0.2

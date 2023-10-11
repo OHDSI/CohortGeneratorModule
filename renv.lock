@@ -95,7 +95,7 @@
       "RemoteHost": "api.github.com",
       "RemoteRepo": "CohortGenerator",
       "RemoteUsername": "ohdsi",
-      "RemoteRef": "68d2ed83c8f185e67f27f03dac97aebedcbd28ad"
+      "RemoteRef": "v0.8.1"
     },
     "CohortIncidence": {
       "Package": "CohortIncidence",
