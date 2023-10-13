@@ -12,7 +12,7 @@ jobs:
   Test-module:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: unit-test-${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
       fail-fast: false
@@ -73,7 +73,7 @@ jobs:
   Test-default-module-restore:
     needs: Test-module
     
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: module-restore-${{ matrix.config.os }} (${{ matrix.config.r }})
     
     strategy:
       fail-fast: false
