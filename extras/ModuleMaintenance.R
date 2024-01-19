@@ -44,3 +44,79 @@ OhdsiRTools::createRenvLockFile(
   )
 )
 renv::init()
+
+# Sync lock files with HADES-wide lock file
+renv::snapshot()
+renv::activate(profile = "dev")
+renv::activate(profile = NULL)
+hadesWideLockFileName <- normalizePath(file.path("renv", "profiles", "dev", "renv.lock"))
+utils::download.file(
+  url = "https://raw.githubusercontent.com/OHDSI/Hades/main/hadesWideReleases/2023Q3/renv.lock",
+  destfile = hadesWideLockFileName
+)
+hadesWideLockFile <- ParallelLogger::loadSettingsFromJson(
+  fileName = hadesWideLockFileName
+)
+projectRenvLockFile <- ParallelLogger::loadSettingsFromJson(
+  fileName = "renv.lock"
+)
+
+# Set the R version
+projectRenvLockFile$R$Version <- hadesWideLockFile$R$Version
+
+# Verify the package versions across lock files
+projectPackages <- data.frame()
+for (i in 1:length(projectRenvLockFile$Packages)) {
+  projectPackages <- rbind(
+    projectPackages,
+    data.frame(
+      projectPackageName = projectRenvLockFile$Packages[[i]]$Package,
+      projectPackageVersion = projectRenvLockFile$Packages[[i]]$Version,
+      projectPackageRemoteRef = ifelse(is.null(projectRenvLockFile$Packages[[i]]$RemoteRef), yes = NA, no = projectRenvLockFile$Packages[[i]]$RemoteRef)
+    )
+  )
+}
+hadesWideLockFilePackages <- data.frame()
+for (i in 1:length(hadesWideLockFile$Packages)) {
+  hadesWideLockFilePackages <- rbind(
+    hadesWideLockFilePackages,
+    data.frame(
+      hwlfPackageName = hadesWideLockFile$Packages[[i]]$Package,
+      hwlfPackageVersion = hadesWideLockFile$Packages[[i]]$Version,
+      hwlfPackageRemoteRef = ifelse(is.null(hadesWideLockFile$Packages[[i]]$RemoteRef), yes = NA, no = hadesWideLockFile$Packages[[i]]$RemoteRef)
+    )
+  )
+}
+
+mergedLockFilePackages <- merge(
+  x = projectPackages,
+  y = hadesWideLockFilePackages,
+  by.x = "projectPackageName",
+  by.y = "hwlfPackageName"
+)
+
+findPackageByName <- function(list, packageName) {
+  index <- which(sapply(list, function(x) x$Package == packageName))
+  return(index)
+}
+
+verDiffs <- mergedLockFilePackages[mergedLockFilePackages$projectPackageVersion != mergedLockFilePackages$hwlfPackageVersion,]
+for (i in 1:nrow(verDiffs)) {
+  index <- findPackageByName(projectRenvLockFile$Packages, verDiffs[i,]$projectPackageName)
+  projectRenvLockFile$Packages[[index]]$Version <- verDiffs[i,]$hwlfPackageVersion
+  if (!is.na(verDiffs[i,]$hwlfPackageRemoteRef)) {
+    projectRenvLockFile$Packages[[index]]$RemoteRef <- verDiffs[i,]$hwlfPackageRemoteRef
+  }
+}
+
+ParallelLogger::saveSettingsToJson(
+  object = projectRenvLockFile,
+  fileName = "renv.lock"
+)
+
+# One off updates
+renv::record("renv@1.0.3")
+renv::record("OHDSI/CirceR@v1.3.2")
+renv::record("OHDSI/CohortGenerator@v0.8.1")
+
+
