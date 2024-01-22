@@ -162,6 +162,12 @@ mandatoryPackages <- list(
     Source = "Repository",
     Repository = "CRAN"
   ),
+  RSQLite = list(
+    Package = "RSQLite",
+    Version = "2.3.5",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
   SqlRender = list(
     Package = "SqlRender",
     Version = "1.16.1",
@@ -170,3 +176,4 @@ mandatoryPackages <- list(
   )
 )
 renv::record(mandatoryPackages)
+renv::record(mandatoryPackages, lockfile = hadesWideLockFileName)
