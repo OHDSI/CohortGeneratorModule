@@ -54,12 +54,18 @@ utils::download.file(
   url = "https://raw.githubusercontent.com/OHDSI/Hades/main/hadesWideReleases/2023Q3/renv.lock",
   destfile = hadesWideLockFileName
 )
-hadesWideLockFile <- ParallelLogger::loadSettingsFromJson(
-  fileName = hadesWideLockFileName
+hadesWideLockFile <- renv::lockfile_read(
+  file = hadesWideLockFileName
 )
-projectRenvLockFile <- ParallelLogger::loadSettingsFromJson(
+projectRenvLockFile <- renv::lockfile_read(
   fileName = "renv.lock"
 )
+# hadesWideLockFile <- ParallelLogger::loadSettingsFromJson(
+#   fileName = hadesWideLockFileName
+# )
+# projectRenvLockFile <- ParallelLogger::loadSettingsFromJson(
+#   fileName = "renv.lock"
+# )
 
 # Set the R version
 projectRenvLockFile$R$Version <- hadesWideLockFile$R$Version
@@ -109,14 +115,14 @@ for (i in 1:nrow(verDiffs)) {
   }
 }
 
-ParallelLogger::saveSettingsToJson(
-  object = projectRenvLockFile,
-  fileName = "renv.lock"
+renv::lockfile_write(
+  lockfile = projectRenvLockFile,
+  file = "renv.lock"
 )
-
 # One off updates
-renv::record("renv@1.0.3")
 renv::record("OHDSI/CirceR@v1.3.2")
+renv::record("OHDSI/CirceR@v1.3.2", lockfile = hadesWideLockFileName)
 renv::record("OHDSI/CohortGenerator@v0.8.1")
+renv::record("OHDSI/CohortGenerator@v0.8.1", lockfile = hadesWideLockFileName)
 
 
