@@ -113,32 +113,14 @@
     },
     "ResultModelManager": {
       "Package": "ResultModelManager",
-      "Version": "0.5.1",
+      "Version": "0.5.6",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "OHDSI",
       "RemoteRepo": "ResultModelManager",
-      "RemoteRef": "v0.5.1",
-      "RemoteSha": "3033804e5af77b8b8dacda67c4d6853731e3641b",
-      "Requirements": [
-        "DBI",
-        "DatabaseConnector",
-        "ParallelLogger",
-        "R",
-        "R6",
-        "SqlRender",
-        "checkmate",
-        "dbplyr",
-        "dplyr",
-        "fastmap",
-        "lubridate",
-        "pool",
-        "readr",
-        "rlang",
-        "zip"
-      ],
-      "Hash": "e4ffc360ac4beafa2dad032ff2da3136"
+      "RemoteRef": "v0.5.6",
+      "RemoteSha": "3033804e5af77b8b8dacda67c4d6853731e3641b"
     },
     "SqlRender": {
       "Package": "SqlRender",
