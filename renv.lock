@@ -44,41 +44,13 @@
     },
     "DatabaseConnector": {
       "Package": "DatabaseConnector",
-      "Version": "6.2.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "DBI",
-        "R",
-        "SqlRender",
-        "bit64",
-        "checkmate",
-        "dbplyr",
-        "digest",
-        "methods",
-        "rJava",
-        "readr",
-        "rlang",
-        "stringr",
-        "urltools",
-        "utils"
-      ],
-      "Hash": "115822c1e0acd6b602a414d1226d1a3b"
+      "Version": "6.3.2",
+      "Source": "Repository"
     },
     "ParallelLogger": {
       "Package": "ParallelLogger",
       "Version": "3.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "jsonlite",
-        "methods",
-        "snow",
-        "utils",
-        "xml2"
-      ],
-      "Hash": "fd636fc067099b75b8ad17e9104b10f3"
+      "Source": "Repository"
     },
     "R6": {
       "Package": "R6",
@@ -125,14 +97,7 @@
     "SqlRender": {
       "Package": "SqlRender",
       "Version": "1.16.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "checkmate",
-        "rJava",
-        "rlang"
-      ],
-      "Hash": "94d9cae91bbd8aed211bea82aff7cf77"
+      "Source": "Repository"
     },
     "backports": {
       "Package": "backports",
@@ -362,6 +327,11 @@
       ],
       "Hash": "266a20443ca13c65688b2116d5220f76"
     },
+    "keyring": {
+      "Package": "keyring",
+      "Version": "1.3.2",
+      "Source": "Repository"
+    },
     "later": {
       "Package": "later",
       "Version": "1.3.1",
@@ -527,12 +497,7 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "utils"
-      ],
-      "Hash": "41b847654f567341725473431dd0d5ab"
+      "Source": "Repository"
     },
     "rlang": {
       "Package": "rlang",
