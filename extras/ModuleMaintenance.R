@@ -125,18 +125,48 @@ renv::record("OHDSI/CirceR@v1.3.2", lockfile = hadesWideLockFileName)
 renv::record("OHDSI/ResultModelManager@v0.5.6")
 renv::record("OHDSI/ResultModelManager@v0.5.6", lockfile = hadesWideLockFileName)
 
-# Mandatory Strategus dependencies: CohortGenerator, DatabaseConnector, keyring, ParallelLogger, renv, SqlRender, 
-renv::record("OHDSI/CohortGenerator@v0.8.1")
-renv::record("OHDSI/CohortGenerator@v0.8.1", lockfile = hadesWideLockFileName)
-renv::record("DatabaseConnector@6.3.2")
-renv::record("DatabaseConnector@6.3.2", lockfile = hadesWideLockFileName)
-renv::record("keyring@1.3.2")
-renv::record("keyring@1.3.2", lockfile = hadesWideLockFileName)
-renv::record("ParallelLogger@3.3.0")
-renv::record("ParallelLogger@3.3.0", lockfile = hadesWideLockFileName)
-renv::record("renv@1.0.3")
-renv::record("renv@1.0.3", lockfile = hadesWideLockFileName)
-renv::record("SqlRender@1.16.1")
-renv::record("SqlRender@1.16.1", lockfile = hadesWideLockFileName)
-
-
+# Mandatory Strategus dependencies: CohortGenerator, DatabaseConnector, keyring, ParallelLogger, renv, SqlRender
+mandatoryPackages <- list(
+  CohortGenerator = list(
+    Package = "CohortGenerator",
+    Version = "0.8.1",
+    Source = "GitHub",
+    RemoteType = "github",
+    RemoteHost = "api.github.com",
+    RemoteUsername = "OHDSI",
+    RemoteRepo = "CohortGenerator",
+    RemoteRef = "v0.8.1",
+    RemoteSha = "78757f1b191a395cf9dcff0d5bbe2b9fa4aa163e"
+  ),
+  DatabaseConnector = list(
+    Package = "DatabaseConnector",
+    Version = "6.3.2",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  keyring = list(
+    Package = "keyring",
+    Version = "1.3.2",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  ParallelLogger = list(
+    Package = "ParallelLogger",
+    Version = "3.3.0",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  renv = list(
+    Package = "renv",
+    Version = "1.0.3",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  SqlRender = list(
+    Package = "SqlRender",
+    Version = "1.16.1",
+    Source = "Repository",
+    Repository = "CRAN"
+  )
+)
+renv::record(mandatoryPackages)
