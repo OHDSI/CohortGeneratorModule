@@ -30,26 +30,29 @@ rCode <- gsub("%version%", moduleInfo$Version, rCode)
 writeLines(rCode, "SettingsFunctions.R")
 
 # Generate renv lock file and activate renv:
-renv::deactivate()
-OhdsiRTools::createRenvLockFile(
-  rootPackage = "CohortGenerator",
-  includeRootPackage = TRUE,
-  mode = "description",
-  additionalRequiredPackages = c(
-    "DatabaseConnector",
-    "checkmate",
-    "CirceR",
-    "testthat",
-    "Eunomia"
-  )
-)
-renv::init()
+# renv::deactivate()
+# OhdsiRTools::createRenvLockFile(
+#   rootPackage = "CohortGenerator",
+#   includeRootPackage = TRUE,
+#   mode = "description",
+#   additionalRequiredPackages = c(
+#     "DatabaseConnector",
+#     "checkmate",
+#     "CirceR",
+#     "testthat",
+#     "Eunomia"
+#   )
+# )
+# renv::init()
+
+# Generate renv lock file for default & dev profiles
+renv::init() # Will init the default profile based on the explicit DESCRIPTION references
+renv::activate(profile = "dev") # Creates a new profile called "dev" for development
+renv::init(profile = "dev") # Init the 'dev' profile renv.lock with the explicit DESCRIPTION references
+renv::activate(profile = NULL) # Sets the default profile as the default for the project
 
 # Sync lock files with HADES-wide lock file
-renv::snapshot()
-renv::activate(profile = "dev")
-renv::activate(profile = NULL)
-hadesWideLockFileName <- normalizePath(file.path("renv", "profiles", "dev", "renv.lock"))
+hadesWideLockFileName <- normalizePath("hades-wide.lock")
 unlink(hadesWideLockFileName)
 utils::download.file(
   url = "https://raw.githubusercontent.com/OHDSI/Hades/main/hadesWideReleases/2023Q3/renv.lock",
@@ -61,12 +64,6 @@ hadesWideLockFile <- renv::lockfile_read(
 projectRenvLockFile <- renv::lockfile_read(
   fileName = "renv.lock"
 )
-# hadesWideLockFile <- ParallelLogger::loadSettingsFromJson(
-#   fileName = hadesWideLockFileName
-# )
-# projectRenvLockFile <- ParallelLogger::loadSettingsFromJson(
-#   fileName = "renv.lock"
-# )
 
 # Set the R version
 projectRenvLockFile$R$Version <- hadesWideLockFile$R$Version

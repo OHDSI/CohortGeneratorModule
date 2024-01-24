@@ -1,0 +1,13 @@
+Type: project
+Description: CohortGeneratorModule
+Depends:
+    bit64,
+    checkmate,
+    OHDSI/CirceR,
+    OHDSI/CohortGenerator,
+    DatabaseConnector,
+    ParallelLogger,
+    OHDSI/ResultModelManager,
+    rlang,
+    SqlRender
+Config/renv/profiles/dev/dependencies: OHDSI/Eunomia, testthat
