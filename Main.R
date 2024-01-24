@@ -14,6 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Adding library references that are required for Strategus
+library(CohortGenerator)
+library(DatabaseConnector) 
+library(keyring)
+library(ParallelLogger)
+library(SqlRender)
+
+# Adding RSQLite so that we can test modules with Eunomia
+library(RSQLite)
+
 # Module methods -------------------------
 execute <- function(jobContext) {
   rlang::inform("Validating inputs")
