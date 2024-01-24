@@ -50,6 +50,7 @@ renv::snapshot()
 renv::activate(profile = "dev")
 renv::activate(profile = NULL)
 hadesWideLockFileName <- normalizePath(file.path("renv", "profiles", "dev", "renv.lock"))
+unlink(hadesWideLockFileName)
 utils::download.file(
   url = "https://raw.githubusercontent.com/OHDSI/Hades/main/hadesWideReleases/2023Q3/renv.lock",
   destfile = hadesWideLockFileName
@@ -137,6 +138,12 @@ mandatoryPackages <- list(
     RemoteRepo = "CohortGenerator",
     RemoteRef = "v0.8.1",
     RemoteSha = "78757f1b191a395cf9dcff0d5bbe2b9fa4aa163e"
+  ),
+  DBI = list(
+    Package = "DBI",
+    Version = "1.2.1",
+    Source = "Repository",
+    Repository = "CRAN"
   ),
   DatabaseConnector = list(
     Package = "DatabaseConnector",
