@@ -1,6 +1,6 @@
 # Use this profile when testing
-#Sys.setenv(RENV_PROFILE = "dev")
-#renv::restore(prompt = FALSE)
+# Sys.setenv(RENV_PROFILE = "dev")
+# renv::restore(prompt = FALSE)
 library(testthat)
 library(Eunomia)
 connectionDetails <- getEunomiaConnectionDetails()
@@ -19,7 +19,7 @@ jobContext$moduleExecutionSettings$resultsDatabaseSchema <- jobContext$moduleExe
 test_that("Test createDataModelSchema", {
   source("Main.R")
   createDataModelSchema(jobContext)
-  
+
   # Verify that the table(s) are created
   connection <- DatabaseConnector::connect(
     connectionDetails = jobContext$moduleExecutionSettings$resultsConnectionDetails
