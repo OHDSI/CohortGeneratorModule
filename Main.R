@@ -212,7 +212,7 @@ createDataModelSchema <- function(jobContext) {
   tablePrefix <- moduleInfo$TablePrefix
   resultsDatabaseSchema <- jobContext$moduleExecutionSettings$resultsDatabaseSchema
   # Workaround for issue https://github.com/tidyverse/vroom/issues/519:
-  readr::local_edition(1)  
+  readr::local_edition(1)
   resultsDataModel <- ResultModelManager::loadResultsDataModelSpecifications(
     filePath = "resultsDataModelSpecification.csv"
   )

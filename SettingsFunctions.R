@@ -35,7 +35,7 @@ createCohortGeneratorModuleSpecifications <- function(incremental = TRUE,
 
   specifications <- list(
     module = "CohortGeneratorModule",
-    version = "0.2.2-7",
+    version = "0.3.0",
     remoteRepo = "github.com",
     remoteUsername = "ohdsi",
     settings = analysis

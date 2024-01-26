@@ -131,7 +131,7 @@ projDevVsProjLockFile[!is.na(projDevVsProjLockFile$lockfile2Version) & projDevVs
 # lock file. Only replace the version in the target
 # lock file if the version is newer. Provide a warning
 # for those packages that could not be evaluated by
-# version 
+# version
 Strategus::syncLockFile(
   sourceOfTruthLockFileName = hadesWideLockFileName,
   targetLockFileName = "renv/profiles/dev/renv.lock"
