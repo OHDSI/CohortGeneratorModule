@@ -1,3 +1,7 @@
+CohortGeneratorModule 0.3.0
+=======================
+- Using renv project profiles to manage core packages required for module execution vs. those that are needed for development purposes.
+
 CohortGeneratorModule 0.2.1
 =======================
 - Update to use CohortGenerator v0.8.1

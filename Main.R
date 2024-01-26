@@ -1,4 +1,4 @@
-# Copyright 2023 Observational Health Data Sciences and Informatics
+# Copyright 2024 Observational Health Data Sciences and Informatics
 #
 # This file is part of CohortGeneratorModule
 #
@@ -13,6 +13,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Adding library references that are required for Strategus
+library(CohortGenerator)
+library(DatabaseConnector)
+library(keyring)
+library(ParallelLogger)
+library(SqlRender)
+
+# Adding RSQLite so that we can test modules with Eunomia
+library(RSQLite)
 
 # Module methods -------------------------
 execute <- function(jobContext) {
@@ -201,6 +211,8 @@ createDataModelSchema <- function(jobContext) {
   moduleInfo <- getModuleInfo()
   tablePrefix <- moduleInfo$TablePrefix
   resultsDatabaseSchema <- jobContext$moduleExecutionSettings$resultsDatabaseSchema
+  # Workaround for issue https://github.com/tidyverse/vroom/issues/519:
+  readr::local_edition(1)
   resultsDataModel <- ResultModelManager::loadResultsDataModelSpecifications(
     filePath = "resultsDataModelSpecification.csv"
   )
