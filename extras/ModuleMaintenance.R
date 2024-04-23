@@ -54,7 +54,7 @@ updatedPackages <- list(
     Repository = "CRAN"
   ),
   "OHDSI/CirceR@v1.3.2",
-  "OHDSI/CohortGenerator@v0.8.1",
+  "OHDSI/CohortGenerator@0c0e48792103beda659f9f1a57c34f0058beb7a3",
   "OHDSI/ResultModelManager@v0.5.6"
 )
 updatedDevPackages <- list(
