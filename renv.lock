@@ -28,8 +28,8 @@
       "RemoteHost": "api.github.com",
       "RemoteUsername": "OHDSI",
       "RemoteRepo": "CohortGenerator",
-      "RemoteRef": "0c0e48792103beda659f9f1a57c34f0058beb7a3",
-      "RemoteSha": "0c0e48792103beda659f9f1a57c34f0058beb7a3"
+      "RemoteRef": "7adc2f6d8a63f7dfd7b66c35dbb99cb59d4ba339",
+      "RemoteSha": "7adc2f6d8a63f7dfd7b66c35dbb99cb59d4ba339"
     },
     "DBI": {
       "Package": "DBI",

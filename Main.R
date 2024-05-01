@@ -102,6 +102,7 @@ execute <- function(jobContext) {
     connection = connection,
     cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
     cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
+    cohortDefinitionSet = cohortDefinitionSet,
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
 
@@ -152,7 +153,9 @@ execute <- function(jobContext) {
       negativeControlOutcomeCohortSet = negativeControlOutcomeSettings$cohortSet,
       tempEmulationSchema = jobContext$moduleExecutionSettings$tempEmulationSchema,
       occurrenceType = negativeControlOutcomeSettings$occurrenceType,
-      detectOnDescendants = negativeControlOutcomeSettings$detectOnDescendants
+      detectOnDescendants = negativeControlOutcomeSettings$detectOnDescendants,
+      incremental = jobContext$settings$incremental,
+      incrementalFolder = jobContext$moduleExecutionSettings$workSubFolder      
     )
 
     CohortCountsNegativeControlOutcomes <- CohortGenerator::getCohortCounts(
