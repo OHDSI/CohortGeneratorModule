@@ -105,6 +105,9 @@ execute <- function(jobContext) {
     cohortDefinitionSet = cohortDefinitionSet,
     databaseId = jobContext$moduleExecutionSettings$databaseId
   )
+  
+  # Filter to columns in the results data model
+  cohortCounts <- filterCohortCountsColumns(cohortCounts)
 
   CohortGenerator::writeCsv(
     x = cohortCounts,
@@ -158,16 +161,16 @@ execute <- function(jobContext) {
       incrementalFolder = jobContext$moduleExecutionSettings$workSubFolder      
     )
 
-    CohortCountsNegativeControlOutcomes <- CohortGenerator::getCohortCounts(
+    cohortCountsNegativeControlOutcomes <- CohortGenerator::getCohortCounts(
       connection = connection,
       cohortDatabaseSchema = jobContext$moduleExecutionSettings$workDatabaseSchema,
       cohortTable = jobContext$moduleExecutionSettings$cohortTableNames$cohortTable,
       databaseId = jobContext$moduleExecutionSettings$databaseId,
       cohortIds = negativeControlOutcomeSettings$cohortSet$cohortId
     )
-
+    
     CohortGenerator::writeCsv(
-      x = CohortCountsNegativeControlOutcomes,
+      x = cohortCountsNegativeControlOutcomes,
       file = file.path(resultsFolder, "cohort_count_neg_ctrl.csv")
     )
   }
@@ -277,6 +280,11 @@ getModuleInfo <- function() {
   }
 
   return(cohortDefinitionSet)
+}
+
+filterCohortCountsColumns <- function(cohortCounts) {
+  # Filter to columns in the results data model
+  return(cohortCounts[c("databaseId", "cohortId", "cohortEntries", "cohortSubjects")])
 }
 
 createCohortDefinitionSetFromJobContext <- function(sharedResources, settings) {
