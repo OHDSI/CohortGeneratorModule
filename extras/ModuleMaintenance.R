@@ -53,8 +53,14 @@ updatedPackages <- list(
     Source = "Repository",
     Repository = "CRAN"
   ),
-  "OHDSI/CirceR@v1.3.2",
-  "OHDSI/CohortGenerator@7adc2f6d8a63f7dfd7b66c35dbb99cb59d4ba339",
+  list(
+    Package = "duckdb",
+    Version = "0.10.2",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  "OHDSI/CirceR@v1.3.3",
+  "OHDSI/CohortGenerator@v0.9.0",
   "OHDSI/ResultModelManager@v0.5.6"
 )
 updatedDevPackages <- list(
