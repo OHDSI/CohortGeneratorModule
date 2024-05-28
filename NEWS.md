@@ -1,3 +1,8 @@
+CohortGeneratorModule 0.4.0
+=======================
+- Update to use CohortGenerator v0.9.0
+- Add DuckDB to renv.lock
+
 CohortGeneratorModule 0.3.0
 =======================
 - Using renv project profiles to manage core packages required for module execution vs. those that are needed for development purposes.
