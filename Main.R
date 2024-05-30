@@ -26,6 +26,12 @@ library(RSQLite)
 
 # Module methods -------------------------
 execute <- function(jobContext) {
+  # Setting the readr.num_threads=1 to prevent multi-threading for reading
+  # and writing csv files which sometimes causes the module to hang on
+  # machines with multiple processors. This option is only overridden
+  # in the scope of this function.
+  withr::local_options(list(readr.num_threads=1))
+  
   rlang::inform("Validating inputs")
   checkmate::assert_list(x = jobContext)
   if (is.null(jobContext$settings)) {
