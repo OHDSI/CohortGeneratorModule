@@ -1,3 +1,7 @@
+CohortGeneratorModule 0.4.1
+=======================
+- Update execute() to set options(readr.num_threads=1) to prevent hanging when reading/writing incremental csv files.
+
 CohortGeneratorModule 0.4.0
 =======================
 - Update to use CohortGenerator v0.9.0
