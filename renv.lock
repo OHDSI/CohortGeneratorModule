@@ -12,14 +12,8 @@
     "CirceR": {
       "Package": "CirceR",
       "Version": "1.3.3",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "OHDSI",
-      "RemoteRepo": "CirceR",
-      "RemoteRef": "v1.3.3",
-      "RemoteSha": "30303ec28bfd3bd4deffc9f84e7b8f9ddbf93c77",
-      "Requirements": []
+      "Source": "Repository",
+      "Repository": "CRAN"
     },
     "CohortGenerator": {
       "Package": "CohortGenerator",
@@ -30,8 +24,7 @@
       "RemoteUsername": "OHDSI",
       "RemoteRepo": "CohortGenerator",
       "RemoteRef": "v0.9.0",
-      "RemoteSha": "e3efad630b8b2c0376431a88fde89e6c4bbac38c",
-      "Requirements": []
+      "RemoteSha": "e3efad630b8b2c0376431a88fde89e6c4bbac38c"
     },
     "DBI": {
       "Package": "DBI",
@@ -91,15 +84,14 @@
     },
     "ResultModelManager": {
       "Package": "ResultModelManager",
-      "Version": "0.5.6",
+      "Version": "0.5.7",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "OHDSI",
       "RemoteRepo": "ResultModelManager",
-      "RemoteRef": "v0.5.6",
-      "RemoteSha": "3033804e5af77b8b8dacda67c4d6853731e3641b",
-      "Requirements": []
+      "RemoteRef": "v0.5.7",
+      "RemoteSha": "1cff4f0b1856b4c9fef662d3a6fb88e3c3005760"
     },
     "SqlRender": {
       "Package": "SqlRender",
@@ -113,8 +105,7 @@
       "Package": "askpass",
       "Version": "1.2.0",
       "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": []
+      "Repository": "CRAN"
     },
     "assertthat": {
       "Package": "assertthat",
@@ -124,6 +115,18 @@
       "Requirements": [],
       "Hash": "50c838a310445e954bc13f26f26a6ecf"
     },
+    "aws.s3": {
+      "Package": "aws.s3",
+      "Version": "0.3.21",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
+    "aws.signature": {
+      "Package": "aws.signature",
+      "Version": "0.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
@@ -131,6 +134,12 @@
       "Repository": "CRAN",
       "Requirements": [],
       "Hash": "c39fbec8a30d23e721980b8afb31984c"
+    },
+    "base64enc": {
+      "Package": "base64enc",
+      "Version": "0.1-3",
+      "Source": "Repository",
+      "Repository": "CRAN"
     },
     "bit": {
       "Package": "bit",
@@ -204,6 +213,12 @@
       "Requirements": [],
       "Hash": "e8a1e41acf02548751f45c718d55aa6a"
     },
+    "curl": {
+      "Package": "curl",
+      "Version": "5.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "dbplyr": {
       "Package": "dbplyr",
       "Version": "2.3.4",
@@ -232,8 +247,7 @@
       "Package": "duckdb",
       "Version": "0.10.2",
       "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": []
+      "Repository": "CRAN"
     },
     "fansi": {
       "Package": "fansi",
@@ -282,6 +296,12 @@
       "Repository": "RSPM",
       "Requirements": [],
       "Hash": "b59377caa7ed00fa41808342002138f9"
+    },
+    "httr": {
+      "Package": "httr",
+      "Version": "1.4.7",
+      "Source": "Repository",
+      "Repository": "CRAN"
     },
     "jsonlite": {
       "Package": "jsonlite",
@@ -338,6 +358,12 @@
       "Repository": "CRAN",
       "Requirements": [],
       "Hash": "e2817ccf4a065c5d9d7f2cfbe7c1d78c"
+    },
+    "mime": {
+      "Package": "mime",
+      "Version": "0.12",
+      "Source": "Repository",
+      "Repository": "CRAN"
     },
     "openssl": {
       "Package": "openssl",
