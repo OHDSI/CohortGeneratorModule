@@ -59,9 +59,50 @@ updatedPackages <- list(
     Source = "Repository",
     Repository = "CRAN"
   ),
-  "OHDSI/CirceR@v1.3.3",
+  list(
+    Package = "aws.s3",
+    Version = "0.3.21",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "aws.signature",
+    Version = "0.6.0",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "base64enc",
+    Version = "0.1-3",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "curl",
+    Version = "5.2.1",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "httr",
+    Version = "1.4.7",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "mime",
+    Version = "0.12",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
+  list(
+    Package = "CirceR",
+    Version = "1.3.3",
+    Source = "Repository",
+    Repository = "CRAN"
+  ),
   "OHDSI/CohortGenerator@v0.9.0",
-  "OHDSI/ResultModelManager@v0.5.6"
+  "OHDSI/ResultModelManager@v0.5.7"
 )
 updatedDevPackages <- list(
   list(
@@ -70,7 +111,12 @@ updatedDevPackages <- list(
     Source = "Repository",
     Repository = "CRAN"
   ),
-  "OHDSI/Eunomia@v1.0.2"
+  list(
+    Package = "Eunomia",
+    Version = "2.0.0",
+    Source = "Repository",
+    Repository = "CRAN"
+  )
 )
 
 # Deactivates and cleans the project to remove any/all old references

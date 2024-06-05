@@ -1,3 +1,7 @@
+CohortGeneratorModule 0.4.2
+=======================
+- Adding `aws.s3` and dependencies to renv.lock for bulk upload to RedShift.
+
 CohortGeneratorModule 0.4.1
 =======================
 - Update execute() to set options(readr.num_threads=1) to prevent hanging when reading/writing incremental csv files.
